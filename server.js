@@ -25,9 +25,16 @@ app.use(express.json());
 // Database Setup
 const dbDir = path.join(__dirname, 'data');
 if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir);
+    console.log(`Directory ${dbDir} does not exist. Attempting to create...`);
+    try {
+        fs.mkdirSync(dbDir);
+        console.log(`Directory created successfully.`);
+    } catch (e) {
+        console.error(`Failed to create directory: ${e.message}`);
+    }
 }
 const dbPath = path.join(dbDir, 'database.sqlite');
+console.log(`Database path: ${dbPath}`);
 
 let db;
 
@@ -45,35 +52,33 @@ let db;
             );
             INSERT OR IGNORE INTO visits (id, count) VALUES (1, 0);
         `);
-        console.log('Connected to SQLite database.');
+        console.log('Connected to SQLite database successfully.');
     } catch (err) {
-        console.error('Error connecting to database:', err);
+        console.error('FATAL: Error connecting to database:', err);
     }
 })();
 
 // API Endpoints
 app.get('/api/visits', async (req, res) => {
     try {
+        if (!db) throw new Error('Database not initialized');
         const result = await db.get('SELECT count FROM visits WHERE id = 1');
-        // Increment immediately on get (simple hit counter) or use separate POST
-        // For simplicity: Increment on GET (which usually implies a page load visit)
-        // Ideally, we might want a POST, but let's stick to simple REST.
-        // Let's separate: GET just reads. Client calls POST to increment.
         res.json({ count: result ? result.count : 0 });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Database error' });
+        console.error('GET /api/visits error:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
     }
 });
 
 app.post('/api/visits', async (req, res) => {
     try {
+        if (!db) throw new Error('Database not initialized');
         await db.run('UPDATE visits SET count = count + 1 WHERE id = 1');
         const result = await db.get('SELECT count FROM visits WHERE id = 1');
         res.json({ count: result.count });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Database error' });
+        console.error('POST /api/visits error:', err);
+        res.status(500).json({ error: 'Database error', details: err.message });
     }
 });
 
