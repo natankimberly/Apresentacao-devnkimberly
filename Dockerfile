@@ -24,7 +24,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install production dependencies (express, sqlite3, etc)
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --legacy-peer-deps
 
 # Copy built assets from builder stage logic
 COPY --from=builder /app/dist ./dist
