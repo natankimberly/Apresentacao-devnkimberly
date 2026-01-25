@@ -1,4 +1,5 @@
 import { Mail, Linkedin, Instagram, Facebook } from 'lucide-react';
+import VisitCounter from './VisitCounter';
 
 const ContactFooter = () => {
   return (
@@ -47,8 +48,9 @@ const ContactFooter = () => {
         </div>
       </div>
       
-      <div className="mt-12 text-center pt-8 border-t border-white/5 text-slate-600 text-sm">
+      <div className="mt-12 text-center pt-8 border-t border-white/5 text-slate-600 text-sm flex flex-col md:flex-row items-center justify-center gap-2">
         <p>&copy; {new Date().getFullYear()} Natã Kimberly. Todos os direitos reservados.</p>
+        <VisitCounter />
       </div>
     </footer>
   );

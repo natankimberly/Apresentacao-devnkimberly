@@ -60,7 +60,7 @@ const TimelineSection = () => {
         </p>
         <p>
             Possuo experiência na área do comércio, rotinas administrativas e departamento pessoal. 
-            Atualmente trabalho no setor de transporte como <strong>Analista de Suporte de TI</strong> em uma grande empresa do ramo de transportes nacional.
+            Atualmente trabalho como <strong>Analista de Suporte de TI</strong> em uma grande empresa do ramo de transportes nacional 🚛.
         </p>
         <p className="font-medium text-cyan-200">
             Meu Objetivo é apresentar as minhas capacidades de desenvolvimento para seu novo site ou aplicação.
@@ -92,7 +92,7 @@ const TimelineSection = () => {
 
       {/* Experiências */}
       <TimelineCard title="Experiências de Trabalho" icon={<Briefcase />} alignment="left" delay={0.2}>
-        <p className="text-lg font-semibold text-white mb-2">Analista de Suporte em uma grande transportadora Nacional com duversas responsabilidades:</p>
+        <p className="text-lg font-semibold text-white mb-2">Analista de Suporte em uma grande transportadora Nacional com diversas responsabilidades:</p>
         <ul className="space-y-3">
             <li className="flex gap-2">
                 <span className="text-cyan-500">▹</span>
@@ -104,12 +104,12 @@ const TimelineSection = () => {
             </li>
             <li className="flex gap-2">
                 <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Firewall & Segurança:</strong> Blindagem de infraestrutura (NATs, Vlans, controle de IPs).</span>
+                <span><strong className="text-slate-200">Firewall & Segurança:</strong> Blindagem de infraestrutura (NATs, Rules, Vlans, controle da rede interna).</span>
             </li>
             
             <li className="flex gap-2">
                 <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Sistemas Diversos:</strong> Controle operacional, Suporte ao usuário, supervisão de ferramentas oorporativas.</span>c
+                <span><strong className="text-slate-200">Sistemas Diversos:</strong> Controle operacional, Suporte ao usuário, supervisão de ferramentas coorporativas.</span>
             </li>
         </ul>
       </TimelineCard>
@@ -120,10 +120,10 @@ const TimelineSection = () => {
             "Minha jornada une a estabilidade da infraestrutura à inovação do desenvolvimento."
         </p>
         <p className="mb-4">
-            Desenvolvo aplicações Fullstack prontas para o mundo real usando <strong>JavaScript (Next.js/React), TypeScript, Node.js, PHP (Laravel) e Python, Go, entre outras tecnologias</strong>, são um exemplo que, com ajuda das ferramentas certas (IA), podemos criar soluções incríveis.
+            Desenvolvo aplicações Fullstack prontas para o mundo real usando <strong>JavaScript (Next.js/React), TypeScript, Node.js, PHP (Laravel), Python, Go, entre outras tecnologias</strong>, são um exemplo que, com ajuda das ferramentas certas (IA), podemos criar soluções incríveis.
         </p>
         <p className="mb-4">
-            Minha experiência com servidores e redes me permite projetar toda a arquitetura de deploy. Além disso, crio soluções <strong>Mobile</strong> que levam a gestão empresarial para a palma da mão.
+            Minha experiência com servidores e redes me permite projetar toda a arquitetura de Software desde o levantamento de requisitos, até o deploy e produção. Além disso, crio soluções <strong>Mobile</strong> que levam a gestão empresarial para a palma da mão.
         </p>
         <div className="flex flex-wrap gap-2 mt-4">
             {['React', 'Next.js', 'Node.js', 'PHP Laravel', 'Python','Go', 'Mobile', 'Infraestrutura', 'Redes'].map(tech => (

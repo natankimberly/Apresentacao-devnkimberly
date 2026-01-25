@@ -109,6 +109,22 @@ const ProjectModal = ({ project, onClose }) => {
                              {project.fullDescription}
                         </div>
                     )}
+
+                    {project.video && (
+                        <div className={`mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-black ${project.isShort ? 'max-w-xs mx-auto' : ''}`}>
+                             <div className={`relative w-full ${project.isShort ? 'pb-[177.78%]' : 'pb-[56.25%]'}`}> {/* 16:9 or 9:16 Aspect Ratio */}
+                                 <iframe 
+                                    className="absolute top-0 left-0 w-full h-full"
+                                    src={project.video} 
+                                    title="YouTube video player" 
+                                    frameBorder="0" 
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowFullScreen
+                                 ></iframe>
+                             </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Footer Actions */}
@@ -162,9 +178,10 @@ const ProjectGrid = () => {
       title: "Hub Machines",
       shortDescription: (
         <>
-            Plataforma SaaS completa para gestão e monitoramento centralizado de toda a infraestrutura de TI da sua empresa.<br />
-            Cansado de Trabalhar com Fantasmas ? 👻 Assuma o controle com o Hub Machines. Chega de fantasmas na sua empresa !!!
-            <br />
+            Plataforma completa para gestão e monitoramento centralizado de toda a infraestrutura de TI da sua empresa.<br />
+            Cansado de Trabalhar com Fantasmas ? 👻<br />
+            Assuma o controle com o Hub Machines. <br />
+            Chega de fantasmas na sua empresa !!!
             <br />
             <strong>Disponivel para testes e contratação.</strong>
         </>
@@ -191,6 +208,8 @@ const ProjectGrid = () => {
       status: "Disponivel para contratação",
       icon: <Server size={28} />,
       image: "/images/hubmachines.png",
+      video: "https://www.youtube.com/embed/lHwJ60mbxZc",
+      isShort: true,
       link: "https://hubmachines.devnkimberly.com.br/"
     },
     {
@@ -220,7 +239,7 @@ const ProjectGrid = () => {
     {
       title: "Automação E-mails",
       shortDescription: "Automação Python para leitura e backup de e-mails corporativos.",
-      descriptionIntro: "Projeto local - Backend Python",
+      descriptionIntro: "Projeto local Entregue ao Cliente- Python",
       fullDescription: (
           <><p>Automação para leitura de e-mails nos servidores da empresa. Baixa e-mails e/ou arquivos anexos para backup e controle de dados, garantindo segurança da informação.</p><p>Objetivo: Automatizar leitura de e-mails e backup de arquivos anexos para controle de dados e segurança da informação.</p><p>Funcionalidades: </p><ul className="list-disc pl-5 mt-4 space-y-2">
           <li>Leitura de e-mails nos servidores da empresa.</li>

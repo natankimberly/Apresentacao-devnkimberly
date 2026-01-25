@@ -5,7 +5,7 @@ const bootLines = [
   "Inicializando currículo Natã Kimberly...",
   "Verificando competências de Infraestrutura e Desenvolvimento... OK",
   "Carregando projetos SaaS... OK",
-  "Carregando projetos de IA... OK",
+  "Carregando projetos com IA... OK",
   "Acesso concedido."
 ];
 
