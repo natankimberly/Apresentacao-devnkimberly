@@ -12,12 +12,34 @@ const ContactFooter = () => {
         </div>
 
         <div className="flex items-center gap-6">
-          <SocialLink href="https://www.linkedin.com/in/nat%C3%A3-k-a63056137/" icon={<Linkedin size={24} />} label="LinkedIn" />
-          <SocialLink href="https://www.instagram.com/devnkimberly/?hl=pt-br" icon={<Instagram size={24} />} label="Instagram" />
-          <SocialLink href="https://www.facebook.com/profile.php?id=61581919812272" icon={<Facebook size={24} />} label="Facebook" />
+          {/* LinkedIn: Blue #0A66C2 */}
+          <SocialLink 
+            href="https://www.linkedin.com/in/nat%C3%A3-k-a63056137/" 
+            icon={<Linkedin size={24} />} 
+            label="LinkedIn" 
+            className="hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white"
+          />
+
+          {/* Instagram: Gradient Purple/Pink/Orange - approximated with pink/purple for simplicity or custom class */}
+          <SocialLink 
+            href="https://www.instagram.com/devnkimberly/?hl=pt-br" 
+            icon={<Instagram size={24} />} 
+            label="Instagram"
+            className="hover:bg-linear-to-tr hover:from-purple-600 hover:via-pink-600 hover:to-orange-500 hover:border-pink-500 hover:text-white"
+          />
+
+          {/* Facebook: Blue #1877F2 */}
+          <SocialLink 
+            href="https://www.facebook.com/profile.php?id=61581919812272" 
+            icon={<Facebook size={24} />} 
+            label="Facebook"
+            className="hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white"
+          />
+          
+          {/* Email: White */}
           <a 
             href="mailto:natankimberly97@gmail.com"
-            className="group flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 transition-all hover:scale-110 hover:shadow-[0_0_15px_rgba(34,211,238,0.3)]"
+            className="group flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/10 hover:bg-white border border-cyan-500/30 text-cyan-400 hover:text-black transition-all hover:scale-110 hover:shadow-[0_0_15px_rgba(255,255,255,0.5)]"
             title="Enviar E-mail"
           >
             <Mail size={24} />
@@ -32,12 +54,12 @@ const ContactFooter = () => {
   );
 };
 
-const SocialLink = ({ href, icon, label }) => (
+const SocialLink = ({ href, icon, label, className }) => (
   <a 
     href={href}
     target="_blank" 
     rel="noopener noreferrer"
-    className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-800/50 hover:bg-slate-700/50 border border-white/5 text-slate-300 hover:text-white transition-all hover:scale-110"
+    className={`flex items-center justify-center w-12 h-12 rounded-full bg-slate-800/50 border border-white/5 text-slate-300 transition-all hover:scale-110 ${className}`}
     aria-label={label}
   >
     {icon}

@@ -61,15 +61,7 @@ const NeuralBackground = () => {
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // Re-initialize particles on resize or keep them? 
-    // For simplicity, we just update bounds in the loop or let them bounce off new bounds.
-    // But since Particle stores canvas dimensions, we should probably update them on resize or pass canvas to update.
-    // Let's just re-init on mount for now, and handle bounds dynamically in a better impl, 
-    // but here we will just pass canvas dims to the particle instance or check against canvas.width in update (if we passed canvas).
-    // The Refactored Particle class stores initial dims. Let's make it robust by updating the bounds check to use current canvas dims.
-    // Actually, to avoid complexity, I'll pass canvas width/height to update.
-
-    let particles = []; // Use let to allow reassignment if needed
+    let particles = [];
     const particleCount = 100;
     const connectionDistance = 150;
     const mouseParams = { x: null, y: null, radius: 200 };
@@ -85,7 +77,6 @@ const NeuralBackground = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       for (let i = 0; i < particles.length; i++) {
-        // Update with current canvas dimensions for bounds checking
         const p = particles[i];
         p.canvasWidth = canvas.width;
         p.canvasHeight = canvas.height;

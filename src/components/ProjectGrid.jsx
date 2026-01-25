@@ -1,53 +1,74 @@
 import { useState } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { Tilt } from 'react-tilt';
 import { ExternalLink, Info, X, Server, MessageCircle, Smartphone, Globe } from 'lucide-react';
+
+const defaultTiltOptions = {
+    reverse: false,
+    max: 15,
+    perspective: 1000,
+    scale: 1.02,
+    speed: 1000,
+    transition: true,
+    axis: null,
+    reset: true,
+    easing: "cubic-bezier(.03,.98,.52,.99)",
+    gyro: true
+};
 
 const ProjectCard = ({ project, onClick }) => (
   <Motion.div 
     layoutId={`card-${project.title}`}
     onClick={() => onClick(project)}
     whileHover={{ y: -5 }}
-    className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md p-8 cursor-pointer transition-all hover:bg-slate-800/60 hover:border-cyan-500/30 ${project.type === 'featured' ? 'md:col-span-2' : 'col-span-1'}`}
+    whileTap={{ scale: 0.98 }}
+    className={`col-span-1 ${project.type === 'featured' ? 'md:col-span-2' : ''}`}
   >
-    <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-    
-    <div className="relative z-10 h-full flex flex-col">
-      <div className="flex justify-between items-start mb-6">
-        <div className="p-4 rounded-xl bg-slate-800/50 border border-white/5 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors overflow-hidden">
-          {project.image ? (
-            <img src={project.image} alt={project.title} className="w-10 h-10 object-contain" />
-          ) : (
-            project.icon
-          )}
+    <Tilt options={defaultTiltOptions} className="h-full">
+        <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40 backdrop-blur-md p-8 cursor-pointer transition-all hover:bg-slate-800/60 hover:border-cyan-500/30">
+            <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            
+            <div className="relative z-10 h-full flex flex-col">
+            <div className="flex justify-between items-start mb-6">
+                <div className="p-4 rounded-xl bg-slate-800/50 border border-white/5 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors overflow-hidden">
+                {project.image ? (
+                    <img src={project.image} alt={project.title} className="w-10 h-10 object-contain" />
+                ) : (
+                    project.icon
+                )}
+                </div>
+                <span className={`text-sm px-3 py-1.5 rounded-full border border-white/10 font-medium ${project.status === 'Em Desenvolvimento' || project.status === 'Em Andamento' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-green-500/10 text-green-400 border-green-500/20'}`}>
+                    {project.status}
+                </span>
+            </div>
+
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{project.title}</h3>
+            <p className="text-slate-400 text-base md:text-lg mb-8 grow line-clamp-3 leading-relaxed">{project.shortDescription}</p>
+
+            <div className="flex flex-wrap gap-2 mt-auto">
+                {project.tags.map((tag, i) => (
+                <span key={i} className="text-xs px-2 py-1 rounded bg-slate-950 text-slate-300 border border-slate-800">
+                    {tag}
+                </span>
+                ))}
+            </div>
+            
+            <div className="mt-4 flex items-center text-cyan-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                Ver detalhes <Info size={14} className="ml-1" />
+            </div>
+            </div>
         </div>
-        <span className={`text-sm px-3 py-1.5 rounded-full border border-white/10 font-medium ${project.status === 'Em Desenvolvimento' || project.status === 'Em Andamento' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-green-500/10 text-green-400 border-green-500/20'}`}>
-            {project.status}
-        </span>
-      </div>
-
-      <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">{project.title}</h3>
-      <p className="text-slate-400 text-base md:text-lg mb-8 grow line-clamp-3 leading-relaxed">{project.shortDescription}</p>
-
-      <div className="flex flex-wrap gap-2 mt-auto">
-        {project.tags.map((tag, i) => (
-          <span key={i} className="text-xs px-2 py-1 rounded bg-slate-950 text-slate-300 border border-slate-800">
-            {tag}
-          </span>
-        ))}
-      </div>
-      
-      <div className="mt-4 flex items-center text-cyan-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-         Ver detalhes <Info size={14} className="ml-1" />
-      </div>
-    </div>
+    </Tilt>
   </Motion.div>
 );
+
+import { createPortal } from 'react-dom';
 
 const ProjectModal = ({ project, onClose }) => {
     if (!project) return null;
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    return createPortal(
+        <div className="fixed inset-0 z-9999 flex items-center justify-center p-4">
              <Motion.div 
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }} 
@@ -104,7 +125,8 @@ const ProjectModal = ({ project, onClose }) => {
                      )}
                 </div>
              </Motion.div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
@@ -114,7 +136,7 @@ const ProjectGrid = () => {
     const projects = [
     {
       title: "Site Institucional Empresarial",
-      shortDescription: "Site totalmente personalizável pelo cliente para os setores de marketing, anúncios de vagas pelo etor de RH, e mapa interativo com localização das filiais.",
+      shortDescription: "Site totalmente personalizável pelo cliente. Painel administrativo para os setores de marketing, anúncios de vagas pelo setor de RH, mapa interativo com localização das filiais, módulo de consulta de notas a Sefaz, e muito mais...",
       descriptionIntro: "Frontend NextJS, TypeScript | Backend Node.js",
       fullDescription: (
         <>
@@ -138,7 +160,15 @@ const ProjectGrid = () => {
     },
     {
       title: "Hub Machines",
-      shortDescription: "Plataforma SaaS completa para gestão e monitoramento centralizado de infraestrutura de TI.",
+      shortDescription: (
+        <>
+            Plataforma SaaS completa para gestão e monitoramento centralizado de toda a infraestrutura de TI da sua empresa.<br />
+            Cansado de Trabalhar com Fantasmas ? 👻 Assuma o controle com o Hub Machines. Chega de fantasmas na sua empresa !!!
+            <br />
+            <br />
+            <strong>Disponivel para testes e contratação.</strong>
+        </>
+      ),
       descriptionIntro: "Frontend React | Backend PHP Laravel",
       fullDescription: (
         <>
@@ -148,7 +178,7 @@ const ProjectGrid = () => {
             <p>Acompanhe o status online/offline de todas as máquinas e visualize sua localização geográfica através de um dashboard interativo com mapa. Gere relatórios personalizados por usuários, filiais ou setores.</p>
             
             <h4 className="text-white font-bold mt-4 mb-2">Gestão de Hardware & Software</h4>
-            <p>Monitore informações detalhadas de hardware, detecte mudanças não autorizadas. Controle programas instalados e monitore a navegação web, com bloqueio de sites não permitidos via agente central.</p>
+            <p>Monitore informações detalhadas de hardware, detecte mudanças não autorizadas. Controle programas instalados e monitore a navegação web das suas maquinas, com bloqueio de sites não permitidos pelos nossos agentes</p>
 
             <h4 className="text-white font-bold mt-4 mb-2">Sistema de Alertas Inteligente</h4>
             <p>Receba alertas personalizados, permitindo uma equipe de TI ativa remotamente.</p>
@@ -156,7 +186,7 @@ const ProjectGrid = () => {
             <p className="mt-4 italic text-cyan-500">Em Desenvolvimento: Suporte a acesso remoto em tempo real.</p>
         </>
       ),
-      tags: ["React", "Laravel", "Monitoramento"],
+      tags: ["React", "PHP", "Laravel", "Monitoramento"],
       type: "featured",
       status: "Disponivel para contratação",
       icon: <Server size={28} />,
@@ -207,22 +237,23 @@ const ProjectGrid = () => {
     },
     {
       title: "WorkChat",
-      shortDescription: "Plataforma de chat empresarial multi-tenant integrada à WhatsApp Business API.",
+      shortDescription: "Este é um grande projeto em desenvolvimento: Plataforma de chat empresarial integrada à WhatsApp Business API.",
       descriptionIntro: "Frontend React | Backend Node.js",
       fullDescription: (
           <>
             <p>Plataforma multi-tenant que permite que múltiplas empresas utilizem o sistema de forma isolada.</p>
             <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>Integração com WhatsApp Business API.</li>
+                <li>Integração com WhatsApp Business API, seu número centralizado para todos os seus clientes.</li>
                 <li>Encaminhamento automático para setores e usuários.</li>
-                <li>Gestão de conversas e configurações por empresa.</li>
+                <li>Plataforma de chat corporativo personalizada com a cara da sua empresa.</li>
             </ul>
-            <p>Sistema em desenvolvimento, robusto e repleto de funcionalidades, disponível para contratação em breve mais detalhes...</p>
+            <p>Sistema em desenvolvimento, robusto e repleto de funcionalidades, disponível para contratação em breve...<br />
+            mais detalhes...</p>
           </>
       ),
       tags: ["React", "Node", "SaaS"],
       type: "standard",
-      status: "Em Andamento",
+      status: "Em Desenvolvimento",
       icon: <MessageCircle size={28} />,
       image: "/images/workchat.png",
       link: null

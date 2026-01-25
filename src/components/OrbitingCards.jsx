@@ -57,7 +57,7 @@ const OrbitingCards = () => {
       <div className="hidden md:block w-full h-full relative">
           {/* Top Left */}
           <Card title="Objetivo" icon={<Target />} delay={0.2} x="-350px" y="-150px">
-            <p>Brasileiro, 28 Anos. Experiência em comércio, rotinas administrativas e transporte. Atualmente analista de suporte de T.I. Busco novos desafios para crescimento pessoal e profissional.</p>
+            <p>Brasileiro, 28 Anos. Experiência em comércio, rotinas administrativas e transporte. Atualmente analista de suporte de T.I.</p>
           </Card>
 
           {/* Top Right */}
@@ -90,7 +90,7 @@ const OrbitingCards = () => {
       <div className="md:hidden flex flex-col gap-6 px-4 w-full">
          <div className="bg-slate-900/80 p-6 rounded-xl border border-white/10">
             <div className="flex items-center gap-2 mb-2 text-cyan-400"><Target /> <h3 className="font-bold text-white">Objetivo</h3></div>
-            <p className="text-slate-400 text-sm">Brasileiro, 28 Anos. Atualmente analista de suporte de T.I. Busco novos desafios.</p>
+            <p className="text-slate-400 text-sm">Brasileiro, 28 Anos. Atualmente analista de suporte de T.I.</p>
          </div>
          <div className="bg-slate-900/80 p-6 rounded-xl border border-white/10">
             <div className="flex items-center gap-2 mb-2 text-cyan-400"><BookOpen /> <h3 className="font-bold text-white">Formação</h3></div>

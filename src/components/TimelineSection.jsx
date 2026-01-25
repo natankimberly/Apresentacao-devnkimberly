@@ -13,12 +13,14 @@ const TimelineCard = ({ title, icon, children, alignment, delay }) => {
     axis: null,
     reset: true,
     easing: "cubic-bezier(.03,.98,.52,.99)",
+    gyro: true
   }
 
   return (
     <Motion.div
       initial={{ opacity: 0, x: alignment === 'left' ? -100 : 100 }}
       whileInView={{ opacity: 1, x: 0 }}
+      whileTap={{ scale: 0.98 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, delay: delay, type: "spring" }}
       className={`relative w-full md:w-[45%] mb-12 ${alignment === 'left' ? 'md:mr-auto' : 'md:ml-auto'}`}
@@ -61,13 +63,13 @@ const TimelineSection = () => {
             Atualmente trabalho no setor de transporte como <strong>Analista de Suporte de TI</strong> em uma grande empresa do ramo de transportes nacional.
         </p>
         <p className="font-medium text-cyan-200">
-            Meu Objetivo é apresentar as minhas capacidades de desenvolvimento.
+            Meu Objetivo é apresentar as minhas capacidades de desenvolvimento para seu novo site ou aplicação.
         </p>
       </TimelineCard>
 
       {/* Formação */}
       <TimelineCard title="Formação" icon={<BookOpen />} alignment="right" delay={0.2}>
-        <p className="mb-2 font-bold text-white">Graduação: Tecnologia em Análise e Desenvolvimento de Sistemas no campus IFMT</p>
+        <p className="mb-2 font-bold text-white">Graduação: Tecnologia em Análise e Desenvolvimento de Sistemas pelo campus IFMT - Universidade Federal de Mato Grosso - Campus Rondonópolis</p>
         <ul className="space-y-3">
             <li className="flex gap-2">
                 <span className="text-cyan-500">▹</span>
@@ -107,21 +109,21 @@ const TimelineSection = () => {
             
             <li className="flex gap-2">
                 <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Sistemas Diversos:</strong> Controle operacional, Suporte ao usuário, supervisão de ferramentas coorporativas.</span>
+                <span><strong className="text-slate-200">Sistemas Diversos:</strong> Controle operacional, Suporte ao usuário, supervisão de ferramentas oorporativas.</span>c
             </li>
         </ul>
       </TimelineCard>
 
       {/* Capacidades */}
-      <TimelineCard title="Capacidades & Stacks" icon={<Cpu />} alignment="right" delay={0.2}>
+      <TimelineCard title="Capacidades" icon={<Cpu />} alignment="right" delay={0.2}>
         <p className="italic text-cyan-200 mb-4 border-l-2 border-cyan-500 pl-3">
             "Minha jornada une a estabilidade da infraestrutura à inovação do desenvolvimento."
         </p>
         <p className="mb-4">
-            Desenvolvo aplicações Fullstack prontas para o mundo real usando <strong>JavaScript (Next.js/React), TypeScript, Node.js, PHP (Laravel) e Python, entre outras tecnologias</strong>.
+            Desenvolvo aplicações Fullstack prontas para o mundo real usando <strong>JavaScript (Next.js/React), TypeScript, Node.js, PHP (Laravel) e Python, Go, entre outras tecnologias</strong>, são um exemplo que, com ajuda das ferramentas certas (IA), podemos criar soluções incríveis.
         </p>
         <p className="mb-4">
-            Minha experiência com servidores e redes me permite projetar toda a arquitetura de deploy. Além disso, crio soluções <strong>Mobile nativas e híbridas</strong> que levam a gestão empresarial para a palma da mão.
+            Minha experiência com servidores e redes me permite projetar toda a arquitetura de deploy. Além disso, crio soluções <strong>Mobile</strong> que levam a gestão empresarial para a palma da mão.
         </p>
         <div className="flex flex-wrap gap-2 mt-4">
             {['React', 'Next.js', 'Node.js', 'PHP Laravel', 'Python','Go', 'Mobile', 'Infraestrutura', 'Redes'].map(tech => (

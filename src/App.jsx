@@ -44,16 +44,21 @@ function App() {
 
                 {/* Initial Scroll Hint */}
                 <Motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1, y: [0, 10, 0] }}
-                    transition={{ delay: 2, duration: 2, repeat: Infinity }}
-                    className="fixed bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center z-20 pointer-events-none"
+                    className="fixed bottom-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
                     style={{ 
-                        opacity: useTransform(scrollYProgress, [0.7, 0.9], [1, 0]) // Fades out earlier (starting at 70% scroll)
+                        opacity: useTransform(scrollYProgress, [0, 0.80], [1, 0]) 
                     }}
                 >
-                    <span className="text-xl md:text-2xl font-mono text-cyan-400 mb-2 shadow-black drop-shadow-md font-bold tracking-widest">ROLE PARA CONTINUAR</span>
-                    <ChevronDown size={40} className="text-cyan-400 drop-shadow-md" />
+                    {/* Inner Content - Handles Entrance and Bounce */}
+                    <Motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1, y: [0, 10, 0] }}
+                        transition={{ delay: 2, duration: 2, repeat: Infinity }}
+                        className="flex flex-col items-center"
+                    >
+                        <span className="text-sm md:text-2xl font-mono text-cyan-400 mb-2 shadow-black drop-shadow-md font-bold tracking-widest text-center whitespace-nowrap">ROLE PARA CONTINUAR</span>
+                        <ChevronDown className="w-6 h-6 md:w-10 md:h-10 text-cyan-400 drop-shadow-md" />
+                    </Motion.div>
                 </Motion.div>
 
                 {/* Timeline Section */}
@@ -61,8 +66,9 @@ function App() {
                     If we want it to scroll 'over' or 'under' or just appear?
                     Let's make it appear below the "header space".
                     Since HeroAvatar sticks to top-20px (approx), Timeline should start flowing in.
+                    Reduced top offset to close the gap (was 100vh).
                 */}
-                <div className="relative z-10 w-full top-[100vh] pb-20">
+                <div className="relative z-10 w-full top-[60vh] pb-20">
                      <TimelineSection />
                      
                      {/* Projects Section - integrated in flow */}

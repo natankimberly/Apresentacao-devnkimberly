@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 
 const bootLines = [
-  "Inicializando currículo Natã Kimberly de Almeida...",
+  "Inicializando currículo Natã Kimberly...",
   "Verificando competências de Infraestrutura e Desenvolvimento... OK",
   "Carregando projetos SaaS... OK",
   "Carregando projetos de IA... OK",
