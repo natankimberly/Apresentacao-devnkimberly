@@ -24,22 +24,27 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install production dependencies (express, sqlite3, etc)
-RUN npm install --omit=dev --legacy-peer-deps
+# Also install su-exec for permission handling in entrypoint
+RUN npm install --omit=dev --legacy-peer-deps && apk add --no-cache su-exec
 
 # Copy built assets from builder stage logic
 COPY --from=builder /app/dist ./dist
 
-# Copy server script
+# Copy server script and entrypoint
 COPY server.js .
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
-# Create data directory for SQLite persistence
+# Create data directory (will be overridden by volume, but good practice)
 RUN mkdir -p /app/data && chown -R node:node /app/data
 
-# Use non-root user (Security Best Practice)
-USER node
+# IMPORTANT: Start as ROOT so entrypoint.sh can fix permissions on the mounted volume
+# entrypoint.sh will override permissions and then switch to USER node using su-exec
+USER root
 
 # Expose port 80
 EXPOSE 80
 
-# Start Node Server
+# Entrypoint script handles permissions + starting server
+ENTRYPOINT ["./entrypoint.sh"]
 CMD ["node", "server.js"]

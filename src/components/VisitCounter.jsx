@@ -24,7 +24,7 @@ const VisitCounter = () => {
                 setCount(data.count);
                 setLoading(false);
              } catch (err) {
-                 console.error("Error fetching visit count:", err);
+                 // Silent fail in production/browser console to keep it clean
                  setLoading(false);
              }
         };
