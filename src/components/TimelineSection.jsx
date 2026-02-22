@@ -48,7 +48,7 @@ const TimelineCard = ({ title, icon, children, alignment, delay }) => {
 
 const TimelineSection = () => {
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-6 py-20 flex flex-col pt-[40vh]"> {/* pt-[40vh] determines when it starts appearing relative to flow */}
+    <div className="relative w-full max-w-6xl mx-auto px-6 py-20 flex flex-col">
       
       {/* Central Line */}
       <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-linear-to-b from-transparent via-cyan-900/50 to-transparent -translate-x-1/2"></div>
@@ -134,13 +134,7 @@ const TimelineSection = () => {
         </div>
       </TimelineCard>
       
-      {/* Title separator for Projects */}
-      <div className="text-center mt-20 mb-10">
-         <div className="inline-flex items-center justify-center p-4 rounded-full bg-slate-900/80 border border-violet-500/30 text-violet-400 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
-            <Code2 size={40} className="mr-3" />
-            <span className="text-3xl font-bold text-white uppercase tracking-widest">Desenvolvimento</span>
-         </div>
-      </div>
+
 
     </div>
   );
