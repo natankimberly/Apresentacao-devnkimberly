@@ -377,16 +377,24 @@ const ProjectGrid = () => {
       descriptionIntro: "Mobile - Android Studio",
       fullDescription: (
         <p>
-          Desenvolvido para recreação em vôlei corporativo. Possui contagem de
-          pontos e sorteio de times. Desenvolvido no Android Studio, com
-          publicação prevista para lojas móveis em breve.
+          Em um ambinete de recreação, onde os participantes não conseguiam
+          acompanhar a pontuação e os times de forma eficiente, pois não existem
+          aplicativos gratuitos para isso. Desenvolvi um aplicativo para
+          recreação vôlei corporativo. Possui contagem de pontos, sorteio de
+          times, gerenciamento de times e estatísticas. Desenvolvido no Android
+          Studio, com publicação prevista para lojas móveis em breve.
         </p>
       ),
       tags: ["Mobile", "Android Studio"],
       status: "Em Desenvolvimento",
       icon: <Smartphone size={28} />,
-      image: "",
-      gallery: ["/projetos/app-voley/1.png", "/projetos/app-voley/2.png"],
+      image: "/projetos/app-voley/4.jpeg",
+      gallery: [
+        "/projetos/app-voley/1.jpeg",
+        "/projetos/app-voley/2.jpeg",
+        "/projetos/app-voley/3.jpeg",
+        "/projetos/app-voley/4.jpeg",
+      ],
       link: null,
     },
   ];
@@ -417,7 +425,7 @@ const ProjectGrid = () => {
       tags: ["Next.js", "TypeScript", "Node.js"],
       status: "Entregue",
       icon: <Globe size={28} />,
-      image: "/images/sitebelluno.png",
+      image: "/projetos/sitebelluno/1.jpg",
       gallery: [
         "/projetos/sitebelluno/1.jpg",
         "/projetos/sitebelluno/2.jpg",
