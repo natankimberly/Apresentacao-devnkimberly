@@ -167,7 +167,7 @@ const ProjectModal = ({ project, onClose }) => {
       />
       <Motion.div
         layoutId={`card-${project.title}`}
-        className="relative w-full max-w-3xl bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-6xl bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -349,7 +349,7 @@ const ProjectGrid = () => {
         <>
           <p>
             Extensão web que insere assinatura no WhatsApp, disponível nas lojas
-            de extensões ChromeWebStore, FirefoxAddons e EdgeAddons.
+            de extensões ChromeWebStore, FirefoxAddons.
           </p>
           <p className="mt-2">
             Objetivo: Identificação de múltiplos usuários em um número comercial
@@ -457,8 +457,8 @@ const ProjectGrid = () => {
       tags: ["Laravel", "Livewire", "PHP", "PostgreSQL"],
       status: "Em Desenvolvimento",
       icon: <Briefcase size={28} />,
-      image: "",
-      gallery: [""],
+      image: "/projetos/contabilidade/1.jpg",
+      gallery: ["/projetos/contabilidade/1.jpg"],
       link: null,
     },
     {
