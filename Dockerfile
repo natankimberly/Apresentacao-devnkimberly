@@ -6,17 +6,21 @@ WORKDIR /app
 # Copy package.json and package-lock.json first to leverage caching
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm ci --legacy-peer-deps
+# Instalar com devDependencies (Vite, Tailwind, etc.). Se NODE_ENV=production
+# vier do Coolify no *build*, npm omite devDeps e o `vite build` quebra.
+RUN NODE_ENV=development npm ci --legacy-peer-deps
 
 # Copy the rest of the application source code
 COPY . .
 
-# Build the application
+# Vite gera bundle de produção por padrão; NODE_ENV aqui não precisa ser development
 RUN npm run build
 
 # Stage 2: Run the application with Node.js (Express + SQLite)
 FROM node:20-alpine
+
+# Runtime: produção (respostas de erro enxutas no server.js). Pode sobrescrever no Coolify.
+ENV NODE_ENV=production
 
 WORKDIR /app
 
