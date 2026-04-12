@@ -46,23 +46,29 @@ const ProjectsShowcase = () => {
   ];
 
   return (
-    <div className="relative w-full overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16 flex flex-col items-center justify-center min-h-[40vh] mt-4 bg-slate-950/20">
+    <div
+      id="projetos"
+      className="relative w-full overflow-hidden pt-24 pb-12 md:pt-32 md:pb-16 flex flex-col items-center justify-center min-h-[40vh] mt-4 bg-slate-950/20 scroll-mt-24"
+    >
       {/* Call to Action Text */}
       <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mb-16 mt-8">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-slate-500">
+          App Evolua Software
+        </p>
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-white via-slate-200 to-slate-400 mb-6 drop-shadow-2xl tracking-tight leading-tight">
-          Precisa de um novo site ou aplicativo ?
+          Software que acompanha a evolução do seu negócio
           <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-cyan-400 to-violet-400">
-            Entre em contato e vamos transformar sua ideia em realidade!
+            Do diagnóstico à operação em produção
           </span>
         </h2>
         <p className="text-lg md:text-2xl text-slate-300 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
-          Desenvolvemos sites de alta performance, aplicativos inovadores e
-          automações inteligentes sob medida para impulsionar a sua empresa.
-          Confira nosso portfólio.
+          Construímos produtos digitais, SaaS, integrações e automações com
+          foco em segurança, performance e experiência. Abaixo, uma amostra do
+          que já colocamos no ar.
         </p>
         <p className="text-xl md:text-2xl text-cyan-400 font-medium tracking-wide drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
-          Pronto para escalar o seu negócio para o próximo nível?
+          Evolua processos, dados e canais digitais com a nossa equipe.
         </p>
       </div>
 

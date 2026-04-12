@@ -1,20 +1,31 @@
-import { Mail, Linkedin, Instagram, Facebook, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import VisitCounter from "./VisitCounter";
 
 const ContactFooter = () => {
   return (
-    <footer className="relative z-40 py-12 px-6 mt-32 border-t border-white/5 bg-slate-950/50 backdrop-blur-sm">
+    <footer
+      id="contato"
+      className="relative z-40 scroll-mt-24 py-12 px-6 mt-24 border-t border-white/5 bg-slate-950/50 backdrop-blur-sm"
+    >
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="text-center md:text-left">
           <h2 className="text-2xl font-bold text-white mb-2">
-            Vamos construir algo juntos? <br />
+            Solicite um orçamento
           </h2>
           <p className="text-cyan-400">
-            Entre em contato para discutirmos seu próximo projeto.
+            Conte objetivo, prazo e integrações — retornamos com proposta e
+            plano de entregas.
           </p>
-          <p className="text-slate-400">
-            Contrate Nossas Soluções para seu negócio!
+          <p className="text-slate-400 mt-2">
+            App Evolua Software — produtos, SaaS, mobile, automação e painéis
+            administrativos.
           </p>
+          <a
+            href="mailto:devnkimberly@appevolua.com.br?subject=Or%C3%A7amento%20-%20App%20Evolua%20Software"
+            className="mt-5 inline-flex items-center justify-center rounded-full border border-cyan-500/40 bg-cyan-500/15 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-500/25"
+          >
+            Enviar e-mail
+          </a>
         </div>
       </div>
 
@@ -31,8 +42,8 @@ const ContactFooter = () => {
         </button>
         <div className="flex flex-col md:flex-row items-center gap-2 text-sm justify-center">
           <p>
-            &copy; {new Date().getFullYear()} Natã Kimberly. Todos os direitos
-            reservados.
+            &copy; {new Date().getFullYear()} App Evolua Software. Todos os
+            direitos reservados.
           </p>
           <VisitCounter />
         </div>

@@ -304,7 +304,7 @@ const ProjectGrid = () => {
     {
       title: "WorkChat",
       shortDescription:
-        "Plataforma de chat empresarial integrada à WhatsApp Business API. Multi-tenant e robusto.",
+        "Plataforma de chat empresarial integrada à WhatsApp Business. Pensado para grandes e pequenas empresas.",
       descriptionIntro: "Frontend React | Backend Node.js",
       fullDescription: (
         <>
@@ -337,6 +337,7 @@ const ProjectGrid = () => {
         "/projetos/workchat/5.jpg",
         "/projetos/workchat/6.jpg",
         "/projetos/workchat/7.jpg",
+        "/projetos/workchat/8.jpg",
       ],
       link: "https://workchat.devnkimberly.com.br/",
     },
@@ -463,10 +464,16 @@ const ProjectGrid = () => {
         </>
       ),
       tags: ["Laravel", "Livewire", "PHP", "PostgreSQL"],
-      status: "Em Desenvolvimento",
+      status: "Entregue",
       icon: <Briefcase size={28} />,
       image: "/projetos/contabilidade/1.jpg",
-      gallery: ["/projetos/contabilidade/1.jpg"],
+      gallery: [
+        "/projetos/contabilidade/1.jpg",
+        "/projetos/contabilidade/2.jpg",
+        "/projetos/contabilidade/3.jpg",
+        "/projetos/contabilidade/4.jpg",
+        "/projetos/contabilidade/5.jpg",
+      ],
       link: null,
     },
     {
@@ -549,10 +556,10 @@ const ProjectGrid = () => {
         )}
       </AnimatePresence>
 
-      {/* Projetos Próprios */}
-      <div className="mb-16">
+      {/* Projetos próprios — âncora #contratar (header) */}
+      <div id="contratar" className="mb-16 scroll-mt-24">
         <h2 className="text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4 inline-block">
-          Projetos Próprios
+          Produtos e plataformas Evolua
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {projetosProprios.map((proj, i) => (
@@ -568,7 +575,7 @@ const ProjectGrid = () => {
       {/* Projetos Contratados */}
       <div>
         <h2 className="text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4 inline-block">
-          Projetos Contratados
+          Cases e entregas para clientes
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projetosContratados.map((proj, i) => (

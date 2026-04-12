@@ -1,73 +1,45 @@
-import { useState, useEffect } from 'react';
-import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion as Motion } from "framer-motion";
 
-const bootLines = [
-  "Aguarde, carregando projetos do portfólio... OK",
-  "Desenvolvedor Full Stack Natã Kimberly... OK",
-  "Acesso concedido."
-];
+const BOOT_TEXT =
+  "[SISTEMA]: Inicializando ecossistema de inovação App Evolua Software...";
 
 const TerminalBoot = ({ onComplete }) => {
-  const [lines, setLines] = useState([]);
-  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [displayed, setDisplayed] = useState("");
   const [showCursor, setShowCursor] = useState(true);
 
   useEffect(() => {
-    if (currentLineIndex >= bootLines.length) {
-      setTimeout(() => onComplete(), 1000); // Delay before closing
-      return;
-    }
-
-    const currentLineText = bootLines[currentLineIndex];
-    let charIndex = 0;
-
+    let i = 0;
     const interval = setInterval(() => {
-      if (charIndex <= currentLineText.length) {
-        setLines(prev => {
-          const newLines = [...prev];
-          newLines[currentLineIndex] = currentLineText.slice(0, charIndex);
-          return newLines;
-        });
-        charIndex++;
+      if (i <= BOOT_TEXT.length) {
+        setDisplayed(BOOT_TEXT.slice(0, i));
+        i++;
       } else {
         clearInterval(interval);
-        setTimeout(() => {
-          setCurrentLineIndex(prev => prev + 1);
-          setLines(prev => [...prev, ""]); // Prepare next line
-        }, 500); // Pause between lines
+        setTimeout(() => onComplete(), 600);
       }
-    }, 50); // Typing speed
-
+    }, 28);
     return () => clearInterval(interval);
-  }, [currentLineIndex, onComplete]);
+  }, [onComplete]);
 
-  // Cursor blinking
   useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-    return () => clearInterval(cursorInterval);
+    const t = setInterval(() => setShowCursor((c) => !c), 480);
+    return () => clearInterval(t);
   }, []);
 
   return (
-    <Motion.div 
+    <Motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, y: -100 }}
-      transition={{ duration: 0.8 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950 font-mono text-green-500 text-xl md:text-2xl"
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.7 }}
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black font-mono text-green-400 text-base sm:text-lg md:text-xl px-6"
     >
-      <div className="w-full max-w-4xl p-10 border-2 border-green-500/30 rounded-xl bg-black/60 backdrop-blur-md shadow-[0_0_80px_rgba(34,197,94,0.15)]">
-        <div className="flex flex-col gap-2">
-            {lines.map((line, index) => (
-            <div key={index} className="flex">
-                <span className="mr-2">{'>'}</span>
-                <span>{line}</span>
-                {index === currentLineIndex && showCursor && (
-                   <span className="inline-block w-2.5 h-5 ml-1 bg-green-500 align-middle"></span>
-                )}
-            </div>
-            ))}
-        </div>
+      <div className="max-w-4xl w-full text-left leading-relaxed">
+        <span className="text-green-500/90">{"> "}</span>
+        <span>{displayed}</span>
+        {showCursor && (
+          <span className="inline-block w-2 h-5 ml-0.5 align-middle bg-green-400" />
+        )}
       </div>
     </Motion.div>
   );

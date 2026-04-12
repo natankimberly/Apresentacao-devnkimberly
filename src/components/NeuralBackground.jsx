@@ -45,7 +45,7 @@ class Particle {
     }
 }
 
-const NeuralBackground = () => {
+const NeuralBackground = ({ embedded = false }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -54,12 +54,26 @@ const NeuralBackground = () => {
     let animationFrameId;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      if (embedded && canvas.parentElement) {
+        const w = canvas.parentElement.clientWidth;
+        const h = canvas.parentElement.clientHeight;
+        canvas.width = Math.max(1, w);
+        canvas.height = Math.max(1, h);
+      } else {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
     };
 
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    let resizeObserver = null;
+    if (embedded && canvas.parentElement) {
+      resizeObserver = new ResizeObserver(() => resizeCanvas());
+      resizeObserver.observe(canvas.parentElement);
+      resizeCanvas();
+    } else {
+      resizeCanvas();
+    }
 
     let particles = [];
     const particleCount = 100;
@@ -103,8 +117,14 @@ const NeuralBackground = () => {
     };
 
     const handleMouseMove = (event) => {
-        mouseParams.x = event.x;
-        mouseParams.y = event.y;
+        if (embedded && canvas) {
+          const rect = canvas.getBoundingClientRect();
+          mouseParams.x = event.clientX - rect.left;
+          mouseParams.y = event.clientY - rect.top;
+        } else {
+          mouseParams.x = event.x;
+          mouseParams.y = event.y;
+        }
     }
     
     const handleMouseLeave = () => {
@@ -122,14 +142,19 @@ const NeuralBackground = () => {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseLeave);
+      resizeObserver?.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [embedded]);
 
   return (
     <canvas 
         ref={canvasRef} 
-        className="fixed top-0 left-0 w-full h-full -z-10 bg-slate-950"
+        className={
+          embedded
+            ? "absolute inset-0 w-full h-full z-0 pointer-events-none bg-slate-950/30"
+            : "fixed top-0 left-0 w-full h-full -z-10 bg-slate-950"
+        }
     />
   );
 };

@@ -34,7 +34,6 @@ const PhotoGallery = () => {
         className="absolute inset-0 z-0 flex flex-col justify-center items-center gap-6 md:gap-8"
         style={{ transform: "rotate(-5deg) scale(1.2)" }}
       >
-        {/* Row 1 - Moves Left (Same as ProjectsShowcase top row) */}
         <Motion.div
           className="flex gap-6 md:gap-8 whitespace-nowrap min-w-max"
           animate={{ x: ["0%", "-50%"] }}
@@ -49,7 +48,7 @@ const PhotoGallery = () => {
             >
               <img
                 src={src}
-                alt={`Gallery Project Row 1`}
+                alt="Projeto"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -57,7 +56,6 @@ const PhotoGallery = () => {
           ))}
         </Motion.div>
 
-        {/* Row 2 - Moves Right (Same as ProjectsShowcase bottom row) */}
         <Motion.div
           className="flex gap-6 md:gap-8 whitespace-nowrap min-w-max"
           animate={{ x: ["-50%", "0%"] }}
@@ -72,7 +70,7 @@ const PhotoGallery = () => {
             >
               <img
                 src={src}
-                alt={`Gallery Project Row 2`}
+                alt="Projeto"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-violet-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>

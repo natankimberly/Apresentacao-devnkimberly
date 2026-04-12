@@ -1,0 +1,6 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Mapa do site (ajuste o domínio se for diferente de appevolua.com.br)
+Sitemap: https://appevolua.com.br/sitemap.xml

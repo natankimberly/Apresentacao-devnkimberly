@@ -89,7 +89,7 @@ const HeroAvatar = () => {
                           className="hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white"
                         />
                         <a 
-                          href="mailto:natankimberly97@gmail.com"
+                          href="mailto:devnkimberly@appevolua.com.br"
                           className="group flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-cyan-500/10 hover:bg-white border border-cyan-500/30 text-cyan-400 hover:text-black transition-all hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.5)]"
                           title="Enviar E-mail"
                         >

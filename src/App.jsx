@@ -2,23 +2,26 @@ import { useState, useRef } from "react";
 import { motion as Motion, useScroll, useTransform } from "framer-motion";
 import NeuralBackground from "./components/NeuralBackground";
 import TerminalBoot from "./components/TerminalBoot";
-import HeroAvatar from "./components/HeroAvatar";
+import CorporateHeader from "./components/CorporateHeader";
+import HeroTypewriter from "./components/HeroTypewriter";
 import TimelineSection from "./components/TimelineSection";
 import ProjectGrid from "./components/ProjectGrid";
 import ContactFooter from "./components/ContactFooter";
 import ProjectsShowcase from "./components/ProjectsShowcase";
 import PhotoGallery from "./components/PhotoGallery";
+import ServicesFaq from "./components/ServicesFaq";
+import DevelopersSection from "./components/DevelopersSection";
+import SeoContractProjectsJsonLd from "./components/SeoContractProjectsJsonLd";
 import { Code2, ChevronDown } from "lucide-react";
 
 const ScrollIndicator = () => {
   const { scrollYProgress } = useScroll();
-  // Fade out as the user reaches the bottom (from 90% to 98% of the page)
   const opacity = useTransform(scrollYProgress, [0, 0.9, 0.98], [1, 1, 0]);
 
   return (
     <Motion.div
       style={{ opacity }}
-      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center pointer-events-none transition-opacity duration-300"
+      className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-none transition-opacity duration-300"
     >
       <span className="text-cyan-400 text-sm md:text-base font-bold font-mono mb-3 tracking-widest uppercase drop-shadow-lg">
         Role para explorar
@@ -42,59 +45,57 @@ function App() {
     <div
       className={`relative min-h-screen bg-transparent text-white selection:bg-cyan-500/30 ${!bootComplete ? "h-screen overflow-hidden" : "overflow-x-hidden"}`}
     >
-      {/* Background is fixed */}
+      <SeoContractProjectsJsonLd />
       <NeuralBackground />
 
-      {/* Boot Screen */}
       {!bootComplete && (
         <TerminalBoot onComplete={() => setBootComplete(true)} />
       )}
 
-      {/* Global Scroll Indicator */}
+      <CorporateHeader visible={bootComplete} />
+
       {bootComplete && <ScrollIndicator />}
 
-      {/* Main Content */}
       <div
         ref={containerRef}
         className={`relative transition-opacity duration-1000 ${bootComplete ? "opacity-100" : "opacity-0"}`}
       >
-        {/* Normal flowing wrapper */}
-        <div className="relative w-full flex flex-col pt-8 md:pt-16">
-          {/* Projects Showcase Loop */}
-          <div className="relative z-10 w-full mt-4 md:mt-8">
+        <div className="relative w-full flex flex-col pt-16 md:pt-20">
+          <HeroTypewriter />
+
+          <div className="relative z-10 w-full">
             <ProjectsShowcase />
           </div>
 
-          {/* Photo Hover Gallery */}
-          <div className="relative z-10 w-full mt-0 md:-mt-16">
+          <div className="relative z-10 w-full mt-0 md:-mt-12">
             <PhotoGallery />
           </div>
 
-          {/* Desenvolvimento Title Area */}
-          <div className="relative z-10 text-center mt-20 mb-10">
+          <div className="relative z-10 text-center mt-12 mb-8 px-4">
             <div className="inline-flex items-center justify-center p-4 rounded-full bg-slate-900/80 border border-violet-500/30 text-violet-400 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
-              <Code2 size={40} className="mr-3" />
-              <span className="text-3xl font-bold text-white uppercase tracking-widest">
-                Desenvolvimento
+              <Code2 size={36} className="mr-3 md:w-10 md:h-10" />
+              <span className="text-2xl md:text-3xl font-bold text-white uppercase tracking-widest">
+                Portfólio
               </span>
             </div>
+            <p className="mt-4 max-w-2xl mx-auto text-slate-400 text-sm md:text-base">
+              Soluções reais — de plataformas próprias a sistemas críticos para
+              clientes.
+            </p>
           </div>
 
-          <div className="relative z-10 w-full mb-12">
+          <div className="relative z-10 w-full mb-8">
             <ProjectGrid />
           </div>
 
-          {/* Timeline Section */}
+          <ServicesFaq />
+
           <div className="relative z-10 w-full">
             <TimelineSection />
           </div>
 
-          {/* Footer Avatar */}
-          <div className="relative z-10 w-full mt-12 pb-10 px-4 flex justify-center">
-            <HeroAvatar />
-          </div>
+          <DevelopersSection />
 
-          {/* Footer */}
           <div className="relative z-10 w-full border-t border-white/10 bg-slate-950/80">
             <ContactFooter />
           </div>

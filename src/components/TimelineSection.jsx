@@ -1,8 +1,16 @@
 import { motion as Motion } from 'framer-motion';
 import { Tilt } from 'react-tilt';
-import { BookOpen, Target, Briefcase, Cpu, Code2 } from 'lucide-react';
+import { Target, Cpu } from 'lucide-react';
 
-const TimelineCard = ({ title, icon, children, alignment, delay }) => {
+export const TimelineCard = ({
+  title,
+  icon,
+  children,
+  alignment,
+  delay,
+  compact = false,
+  connectors = true,
+}) => {
   const defaultOptions = {
     reverse: false,
     max: 20,
@@ -13,31 +21,53 @@ const TimelineCard = ({ title, icon, children, alignment, delay }) => {
     axis: null,
     reset: true,
     easing: "cubic-bezier(.03,.98,.52,.99)",
-    gyro: true
-  }
+    gyro: true,
+  };
+
+  const connectorTop = compact ? "top-8" : "top-10";
+  const dotTop = compact ? "top-7" : "top-9";
 
   return (
     <Motion.div
-      initial={{ opacity: 0, x: alignment === 'left' ? -100 : 100 }}
+      initial={{ opacity: 0, x: alignment === "left" ? -100 : 100 }}
       whileInView={{ opacity: 1, x: 0 }}
       whileTap={{ scale: 0.98 }}
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.8, delay: delay, type: "spring" }}
-      className={`relative w-full md:w-[45%] mb-12 ${alignment === 'left' ? 'md:mr-auto' : 'md:ml-auto'}`}
+      className={`relative w-full ${connectors ? `md:w-[45%] ${compact ? "mb-8 md:mb-10" : "mb-12"} ${alignment === "left" ? "md:mr-auto" : "md:ml-auto"}` : "mb-0 h-full"}`}
     >
-      {/* Visual Connector Line to center */}
-      <div className={`hidden md:block absolute top-10 w-[55%] h-[2px] bg-linear-to-r from-cyan-500/50 to-transparent ${alignment === 'left' ? 'right-[-55%] rotate-0' : 'left-[-55%] rotate-180'}`}></div>
-      <div className={`hidden md:block absolute top-9 w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_cyan] ${alignment === 'left' ? 'right-[-55px]' : 'left-[-55px]'}`}></div>
+      {connectors && (
+        <>
+          <div
+            className={`hidden md:block absolute ${connectorTop} w-[55%] h-[2px] bg-linear-to-r from-cyan-500/50 to-transparent ${alignment === "left" ? "right-[-55%] rotate-0" : "left-[-55%] rotate-180"}`}
+          ></div>
+          <div
+            className={`hidden md:block absolute ${dotTop} w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_cyan] ${alignment === "left" ? "right-[-55px]" : "left-[-55px]"}`}
+          ></div>
+        </>
+      )}
 
-      <Tilt options={defaultOptions} className="h-full">
-        <div className="h-full p-10 md:p-12 rounded-3xl bg-slate-900/40 backdrop-blur-md border border-white/10 hover:border-cyan-400/50 transition-colors shadow-2xl group">
-          <div className="flex items-center gap-6 mb-8 border-b border-white/5 pb-6">
-            <div className="p-4 rounded-2xl bg-slate-800 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all shadow-[0_0_20px_rgba(34,211,238,0.25)]">
-                {icon}
+      <Tilt options={defaultOptions} className="block h-full min-h-0">
+        <div
+          className={`flex min-h-0 flex-col rounded-3xl bg-slate-900/40 backdrop-blur-md border border-white/10 hover:border-cyan-400/50 transition-colors shadow-2xl group ${compact ? "p-6 md:p-8" : "p-10 md:p-12"}`}
+        >
+          <div
+            className={`flex items-center border-b border-white/5 pb-6 ${compact ? "gap-4 mb-5" : "gap-6 mb-8"}`}
+          >
+            <div
+              className={`rounded-2xl bg-slate-800 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all shadow-[0_0_20px_rgba(34,211,238,0.25)] ${compact ? "p-3" : "p-4"}`}
+            >
+              {icon}
             </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-slate-100 tracking-tight">{title}</h3>
+            <h3
+              className={`font-bold text-slate-100 tracking-tight ${compact ? "text-xl md:text-2xl" : "text-3xl md:text-4xl"}`}
+            >
+              {title}
+            </h3>
           </div>
-          <div className="text-lg md:text-xl text-slate-300 leading-relaxed font-light space-y-6">
+          <div
+            className={`text-slate-300 leading-relaxed font-light space-y-6 ${compact ? "text-sm md:text-base" : "text-lg md:text-xl"}`}
+          >
             {children}
           </div>
         </div>
@@ -48,94 +78,78 @@ const TimelineCard = ({ title, icon, children, alignment, delay }) => {
 
 const TimelineSection = () => {
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-6 py-20 flex flex-col">
-      
-      {/* Central Line */}
-      <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-linear-to-b from-transparent via-cyan-900/50 to-transparent -translate-x-1/2"></div>
-      
-      {/* Objetivo */}
-      <TimelineCard title="Objetivo" icon={<Target />} alignment="left" delay={0.2}>
+    <div
+      id="sobre"
+      className="relative w-full max-w-6xl mx-auto px-6 py-20 flex flex-col scroll-mt-24"
+    >
+      <div className="relative z-[1] mb-10 text-center md:mb-12">
+        <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400/90">
+          Sobre nós
+        </p>
+        <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">
+          Como a App Evolua Software trabalha
+        </h2>
+        <p className="mx-auto mt-3 max-w-2xl text-slate-400">
+          Fale com a gente com clareza: explicamos o caminho em etapas simples,
+          do que você precisa até o sistema no ar.
+        </p>
+      </div>
+
+      <div className="relative z-[1] grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 items-stretch">
+      <TimelineCard
+        title="Nossa missão"
+        icon={<Target />}
+        alignment="left"
+        delay={0.15}
+        connectors={false}
+      >
         <p>
-            Brasileiro, 28 Anos - habilitado.
+          Ajudar empresas e quem empreende a{" "}
+          <strong className="text-white">organizar processos, rotinas e atendimento ao cliente</strong>{" "}
+          com programas sob medida, tudo conversando entre si quando precisar.
         </p>
         <p>
-            Possuo experiência na área do comércio, rotinas administrativas e departamento pessoal. 
-            Atualmente trabalho como <strong>Analista de Suporte de TI</strong> em uma grande empresa do ramo de transportes nacional 🚛.
+          Trabalhamos perto de você, com calma e cuidado, para que a solução
+          funcione no dia a dia — inclusive com olhar forte para{" "}
+          <strong>rede, servidores e segurança</strong>, para seu negócio dormir
+          tranquilo.
         </p>
         <p className="font-medium text-cyan-200">
-            Meu Objetivo é apresentar as minhas capacidades de desenvolvimento para seu novo site ou aplicação.
+          Começamos ouvindo o que você precisa e devolvendo um plano em passos
+          fáceis de acompanhar.
         </p>
       </TimelineCard>
 
-      {/* Formação */}
-      <TimelineCard title="Formação" icon={<BookOpen />} alignment="right" delay={0.2}>
-        <p className="mb-2 font-bold text-white">Graduação: Tecnologia em Análise e Desenvolvimento de Sistemas pelo campus IFMT - Universidade Federal de Mato Grosso - Campus Rondonópolis</p>
-        <ul className="space-y-3">
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Algoritmos & Lógica:</strong> Estruturação de pensamento para resolver problemas complexos com eficiência.</span>
-            </li>
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Engenharia de Software:</strong> Arquitetura, ciclos de vida e qualidade de código para sistemas escaláveis.</span>
-            </li>
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Banco de Dados:</strong> Modelagem relacional, integridade e performance.</span>
-            </li>
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Programação Web & Mobile:</strong> Interfaces intuitivas e fluidas em ecossistemas modernos.</span>
-            </li>
-        </ul>
-      </TimelineCard>
-
-      {/* Experiências */}
-      <TimelineCard title="Experiências de Trabalho" icon={<Briefcase />} alignment="left" delay={0.2}>
-        <p className="text-lg font-semibold text-white mb-2">Analista de Suporte em uma grande transportadora Nacional com diversas responsabilidades:</p>
-        <ul className="space-y-3">
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">File Servers:</strong> Gestão centralizada de dados com segurança e redundância.</span>
-            </li>
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Windows Servers:</strong> Conhecimentos em Windows Server e Active Directory, Acessos Terminal Servers (TS) uso dos sistemas da empresa remotamente pelos funcionários de diversas filiais espalhadas pelo país.</span>
-            </li>
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Firewall & Segurança:</strong> Blindagem de infraestrutura (NATs, Rules, Vlans, controle da rede interna).</span>
-            </li>
-            
-            <li className="flex gap-2">
-                <span className="text-cyan-500">▹</span>
-                <span><strong className="text-slate-200">Sistemas Diversos:</strong> Controle operacional, Suporte ao usuário, supervisão de ferramentas coorporativas.</span>
-            </li>
-        </ul>
-      </TimelineCard>
-
-      {/* Capacidades */}
-      <TimelineCard title="Capacidades" icon={<Cpu />} alignment="right" delay={0.2}>
+      <TimelineCard
+        title="O que entregamos"
+        icon={<Cpu />}
+        alignment="right"
+        delay={0.22}
+        connectors={false}
+      >
         <p className="italic text-cyan-200 mb-4 border-l-2 border-cyan-500 pl-3">
-            "Minha jornada une a estabilidade da infraestrutura à inovação do desenvolvimento."
+          Do que acontece “nos bastidores” da tecnologia até o que sua equipe
+          usa na tela.
         </p>
         <p className="mb-4">
-            Desenvolvo aplicações Fullstack prontas para o mundo real usando <strong>JavaScript (Next.js/React), TypeScript, Node.js, PHP (Laravel), Python, Go, entre outras tecnologias</strong>, são um exemplo que, com ajuda das ferramentas certas (IA), podemos criar soluções incríveis.
+          Criamos <strong>sites, sistemas internos e aplicativos para celular</strong>
+          , sempre pensando em ser fácil de usar, estável e preparado para
+          crescer junto com o seu negócio.
         </p>
         <p className="mb-4">
-            Minha experiência com servidores e redes me permite projetar toda a arquitetura de Software desde o levantamento de requisitos, até o deploy e produção. Além disso, crio soluções <strong>Mobile</strong> que levam a gestão empresarial para a palma da mão.
+          Cuidamos de <strong>integrações</strong> (um sistema “falar” com o
+          outro), <strong>painéis</strong> para você enxergar números e rotinas,
+          e colocamos tudo no ar com acompanhamento após a entrega.
         </p>
         <div className="flex flex-wrap gap-2 mt-4">
-            {['React', 'Next.js', 'Node.js', 'PHP Laravel', 'Python','Go', 'Mobile', 'Infraestrutura', 'Redes'].map(tech => (
-                <span key={tech} className="px-3 py-1 rounded bg-slate-800 border border-slate-700 text-xs font-mono text-cyan-400">
+            {['Sites', 'Sistemas internos', 'Apps', 'Automações', 'Painéis', 'Suporte'].map(tech => (
+                <span key={tech} className="px-3 py-1 rounded bg-slate-800 border border-slate-700 text-xs font-medium text-cyan-300">
                     {tech}
                 </span>
             ))}
         </div>
       </TimelineCard>
-      
-
-
+      </div>
     </div>
   );
 };
