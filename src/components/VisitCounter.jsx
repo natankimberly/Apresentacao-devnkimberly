@@ -11,20 +11,24 @@ const VisitCounter = () => {
     // Let's do POST to increment and get the new value.
 
     const updateCount = async () => {
-      // Check if already visited this session?
-      // For a simple 'hit counter', we count every reload (like the external API did).
+      const sessionKey = "appevolua_visit_counted";
       try {
-        // If we want to simple view: GET /api/visits
-        // If we want to increment: POST /api/visits
-
-        // Let's increment on mount
-        const res = await fetch("/api/visits", { method: "POST" });
-        if (!res.ok) throw new Error("Failed to increment");
+        let res;
+        if (typeof sessionStorage !== "undefined" && sessionStorage.getItem(sessionKey)) {
+          res = await fetch("/api/visits", { method: "GET" });
+        } else {
+          res = await fetch("/api/visits", { method: "POST" });
+          if (res.status === 429) {
+            res = await fetch("/api/visits", { method: "GET" });
+          } else if (res.ok && typeof sessionStorage !== "undefined") {
+            sessionStorage.setItem(sessionKey, "1");
+          }
+        }
+        if (!res.ok) throw new Error("Failed to fetch visits");
         const data = await res.json();
         setCount(data.count);
         setLoading(false);
       } catch {
-        // Silent fail in production/browser console to keep it clean
         setLoading(false);
       }
     };

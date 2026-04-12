@@ -14,6 +14,35 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 80; // Default to 80 for Coolify/Container
 
+const isProd = process.env.NODE_ENV === "production";
+
+/** Limita POST /api/visits (evita inflar o contador com script). */
+const postVisitTimestamps = new Map();
+const POST_VISIT_MIN_MS = 3000;
+const POST_VISIT_WINDOW_MS = 60_000;
+const POST_VISIT_MAX_PER_WINDOW = 30;
+
+function rateLimitPostVisits(req, res, next) {
+  const ip = req.ip || req.socket?.remoteAddress || "unknown";
+  const now = Date.now();
+  let list = postVisitTimestamps.get(ip);
+  if (!list) {
+    list = [];
+    postVisitTimestamps.set(ip, list);
+  }
+  const recent = list.filter((t) => now - t < POST_VISIT_WINDOW_MS);
+  postVisitTimestamps.set(ip, recent);
+  if (recent.length >= POST_VISIT_MAX_PER_WINDOW) {
+    return res.status(429).json({ error: "Muitas requisições. Tente mais tarde." });
+  }
+  const last = recent[recent.length - 1];
+  if (last && now - last < POST_VISIT_MIN_MS) {
+    return res.status(429).json({ error: "Aguarde um instante." });
+  }
+  recent.push(now);
+  next();
+}
+
 // Security and Optimization
 app.use(helmet({
     contentSecurityPolicy: false, 
@@ -67,11 +96,14 @@ app.get('/api/visits', async (req, res) => {
         res.json({ count: result ? result.count : 0 });
     } catch (err) {
         console.error('GET /api/visits error:', err);
-        res.status(500).json({ error: 'Database error', details: err.message });
+        res.status(500).json({
+          error: "Database error",
+          ...(isProd ? {} : { details: err.message }),
+        });
     }
 });
 
-app.post('/api/visits', async (req, res) => {
+app.post('/api/visits', rateLimitPostVisits, async (req, res) => {
     try {
         if (!db) throw new Error('Database not initialized');
         await db.run('UPDATE visits SET count = count + 1 WHERE id = 1');
@@ -79,7 +111,10 @@ app.post('/api/visits', async (req, res) => {
         res.json({ count: result.count });
     } catch (err) {
         console.error('POST /api/visits error:', err);
-        res.status(500).json({ error: 'Database error', details: err.message });
+        res.status(500).json({
+          error: "Database error",
+          ...(isProd ? {} : { details: err.message }),
+        });
     }
 });
 
