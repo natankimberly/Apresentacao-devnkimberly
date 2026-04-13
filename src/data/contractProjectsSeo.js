@@ -25,7 +25,7 @@ export const CONTRACT_PROJECTS_SEO = [
       "App Evolua Software",
     ],
     imagePath: "/images/hubmachines.png",
-    offerUrl: "https://assinehubmachines.devnkimberly.com.br/",
+    offerUrl: "https://assinehubmachines.appevolua.com.br/",
   },
   {
     id: "workchat",
@@ -41,7 +41,28 @@ export const CONTRACT_PROJECTS_SEO = [
       "App Evolua Software",
     ],
     imagePath: "/images/workchat.png",
-    offerUrl: "https://workchat.devnkimberly.com.br/",
+    offerUrl: "https://workchat.appevolua.com.br/",
+  },
+  {
+    id: "workcontrol-tower",
+    name: "WorkControl Tower",
+    description:
+      "Plataforma SaaS multitenant de atendimento e operação com funil visual, Kanban e mapa de calor para gestores. Stack: backend Laravel 12 (PHP 8.3+), frontend Vue 3 (Composition API) com Inertia.js e Tailwind CSS v4, banco PostgreSQL (ou SQLite em desenvolvimento), tempo real com Laravel Reverb e Echo.",
+    keywords: [
+      "WorkControl Tower",
+      "Laravel 12",
+      "Vue 3",
+      "Inertia.js",
+      "Tailwind CSS v4",
+      "Laravel Reverb",
+      "Laravel Echo",
+      "PostgreSQL",
+      "SaaS multitenant",
+      "Kanban",
+      "App Evolua Software",
+    ],
+    imagePath: "/projetos/worktower/1.jpg",
+    offerUrl: "https://workcontroltower.appevolua.com.br/",
   },
 ];
 

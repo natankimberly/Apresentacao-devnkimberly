@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Briefcase,
   Film,
+  LayoutDashboard,
 } from "lucide-react";
 import { createPortal } from "react-dom";
 
@@ -340,6 +341,82 @@ const ProjectGrid = () => {
         "/projetos/workchat/8.jpg",
       ],
       link: "https://workchat.appevolua.com.br/",
+    },
+    {
+      title: "WorkControl Tower",
+      shortDescription:
+        "Torre de controle operacional: atendimento multi-setor, funil visual e mapa de calor para o gestor enxergar gargalos — sem mais ferramentas isoladas.",
+      descriptionIntro:
+        "Backend Laravel (PHP) | Frontend Vue 3 + Inertia.js + Tailwind CSS v4 | PostgreSQL · Reverb + Echo",
+      fullDescription: (
+        <>
+          <p className="mb-4">
+            A <strong className="text-white">WorkControl Tower</strong> une
+            atendimento por setores, visão de funil e mapa de calor para quem
+            precisa de <strong>clareza operacional</strong> — não de mais um
+            quadro solto no canto. Do primeiro contato ao encerramento: visão
+            única, fluxo por áreas e indicadores que mostram onde investir tempo
+            e recurso.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            1 · Um funil, vários setores
+          </h4>
+          <p>
+            Centralize chamados e etapas em uma experiência contínua. Cada time
+            enxerga o que importa, sem perder o fio do ciclo do cliente ou da
+            operação.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            2 · Mapa de calor para quem decide
+          </h4>
+          <p>
+            A torre traduz volume, pressão e distribuição por setor em leitura
+            visual: menos planilha improvisada, mais decisão sobre onde
+            reforçar e o que ajustar.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            3 · Inovação sem complicar o dia a dia
+          </h4>
+          <p>
+            Interface pensada para quem executa e para quem gerencia: rápida,
+            clara e preparada para crescer com a empresa — sem remendar integrações
+            caseiras entre sistemas que não conversam.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Visão executiva
+          </h4>
+          <p>
+            O gestor enxerga a operação inteira, não só o próprio quadro:
+            gargalos, desequilíbrios entre áreas e oportunidades de melhoria com
+            uma camada visual voltada à liderança.
+          </p>
+        </>
+      ),
+      tags: [
+        "SaaS",
+        "Multitenant",
+        "Kanban",
+        "Laravel 12",
+        "PHP 8.3+",
+        "Vue 3",
+        "Inertia.js",
+        "Tailwind v4",
+        "PostgreSQL",
+        "Reverb + Echo",
+      ],
+      status: "Disponivel para contratação",
+      icon: <LayoutDashboard size={28} />,
+      image: "/projetos/worktower/1.jpg",
+      gallery: [
+        "/projetos/worktower/1.jpg",
+        "/projetos/worktower/2.jpg",
+        "/projetos/worktower/3.jpg",
+        "/projetos/worktower/4.jpg",
+        "/projetos/worktower/5.jpg",
+        "/projetos/worktower/6.jpg",
+        "/projetos/worktower/7.jpg",
+      ],
+      link: "https://workcontroltower.appevolua.com.br/",
     },
     {
       title: "Extensão Assinatura Web WhatsApp",
