@@ -299,7 +299,7 @@ const ProjectGrid = () => {
       ],
       video: "https://www.youtube.com/embed/lHwJ60mbxZc",
       isShort: true,
-      link: "https://assinehubmachines.devnkimberly.com.br/",
+      link: "https://assinehubmachines.appevolua.com.br/",
     },
     {
       title: "WorkChat",
@@ -339,7 +339,7 @@ const ProjectGrid = () => {
         "/projetos/workchat/7.jpg",
         "/projetos/workchat/8.jpg",
       ],
-      link: "https://workchat.devnkimberly.com.br/",
+      link: "https://workchat.appevolua.com.br/",
     },
     {
       title: "Extensão Assinatura Web WhatsApp",
