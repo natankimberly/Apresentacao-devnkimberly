@@ -14,6 +14,7 @@ import {
   Briefcase,
   Film,
   LayoutDashboard,
+  Glasses,
 } from "lucide-react";
 import { createPortal } from "react-dom";
 
@@ -371,20 +372,18 @@ const ProjectGrid = () => {
           </h4>
           <p>
             A torre traduz volume, pressão e distribuição por setor em leitura
-            visual: menos planilha improvisada, mais decisão sobre onde
-            reforçar e o que ajustar.
+            visual: menos planilha improvisada, mais decisão sobre onde reforçar
+            e o que ajustar.
           </p>
           <h4 className="text-white font-bold mt-4 mb-2">
             3 · Inovação sem complicar o dia a dia
           </h4>
           <p>
             Interface pensada para quem executa e para quem gerencia: rápida,
-            clara e preparada para crescer com a empresa — sem remendar integrações
-            caseiras entre sistemas que não conversam.
+            clara e preparada para crescer com a empresa — sem remendar
+            integrações caseiras entre sistemas que não conversam.
           </p>
-          <h4 className="text-white font-bold mt-4 mb-2">
-            Visão executiva
-          </h4>
+          <h4 className="text-white font-bold mt-4 mb-2">Visão executiva</h4>
           <p>
             O gestor enxerga a operação inteira, não só o próprio quadro:
             gargalos, desequilíbrios entre áreas e oportunidades de melhoria com
@@ -618,6 +617,59 @@ const ProjectGrid = () => {
       icon: <Film size={28} />,
       image: "/projetos/a2cine/1.jpg",
       gallery: ["/projetos/a2cine/1.gif"],
+      link: null,
+    },
+    {
+      title: "Mercadão dos Óculos",
+      shortDescription:
+        "Landing page premium desenvolvida para a rede Mercadão dos Óculos Rondonópolis - MT, apresentando catálogo interativo de marcas e guia de estilo personalizado.",
+      descriptionIntro:
+        "Landing Page de Vendas & Experiência de Marca (HTML/CSS/JS)",
+      fullDescription: (
+        <>
+          <p className="mb-4">
+            Desenvolvimento de uma Landing Page de alta performance para a rede
+            de óticas <strong>Mercadão dos Óculos</strong>. O projeto foi focado
+            em criar uma presença digital forte e converter visitantes em
+            clientes através de uma interface moderna e informativa.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Catálogo Interativo & Marcas
+          </h4>
+          <p>
+            Implementação de um sistema de galeria dinâmica para exibição das
+            diversas marcas e modelos disponíveis, permitindo que o usuário
+            visualize a coleção de forma fluida e intuitiva.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Guia de Estilo Personalizado
+          </h4>
+          <p>
+            Seção educativa que auxilia o cliente a escolher a armação ideal com
+            base no seu formato de rosto, agregando valor à experiência de
+            compra e posicionando a marca como autoridade no setor.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Tecnologia & Performance
+          </h4>
+          <p>
+            Desenvolvido com foco em velocidade de carregamento e responsividade
+            total, utilizando Tailwind CSS para um design limpo e Vanilla
+            JavaScript para interações leves, incluindo componentes interativos
+            e integração de vídeos das unidades físicas.
+          </p>
+        </>
+      ),
+      tags: ["HTML", "CSS", "JS", "Tailwind", "Three.js", "Design"],
+      status: "Entregue",
+      icon: <Glasses size={28} />,
+      image: "/projetos/mercadao/1.jpg",
+      gallery: [
+        "/projetos/mercadao/1.jpg",
+        "/projetos/mercadao/2.jpg",
+        "/projetos/mercadao/3.jpg",
+        "/projetos/mercadao/4.jpg",
+      ],
       link: null,
     },
   ];

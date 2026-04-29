@@ -10,13 +10,27 @@ const PhotoGallery = () => {
     "/projetos/workchat/3.jpg",
     "/projetos/workchat/4.jpg",
     "/projetos/sitebelluno/1.jpg",
+    "/projetos/mercadao/1.jpg",
+    "/projetos/mercadao/2.jpg",
+    "/projetos/mercadao/3.jpg",
+    "/projetos/mercadao/4.jpg",
+    "/projetos/hubmachines/2.jpg",
   ];
 
   const imagesRow2 = [
+    "/projetos/mercadao/1.jpg",
+    "/projetos/mercadao/2.jpg",
+    "/projetos/mercadao/3.jpg",
+    "/projetos/mercadao/4.jpg",
+    "/projetos/hubmachines/2.jpg",
+    "/projetos/sitebelluno/1.jpg",
     "/projetos/sitebelluno/2.jpg",
     "/projetos/sitebelluno/3.jpg",
     "/projetos/extensao-whats/1.jpg",
     "/projetos/a2cine/1.gif",
+    "/projetos/workchat/2.jpg",
+    "/projetos/workchat/3.jpg",
+    "/projetos/workchat/4.jpg",
   ];
 
   return (
