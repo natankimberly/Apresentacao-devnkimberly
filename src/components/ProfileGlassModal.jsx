@@ -20,7 +20,7 @@ const ProfileGlassModal = ({ open, onClose, title, subtitle }) => {
     <AnimatePresence>
       {open && (
         <Motion.div
-          className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto p-4 py-8 sm:p-6"
+          className="fixed inset-0 z-200 flex items-center justify-center overflow-y-auto p-4 py-8 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -40,15 +40,15 @@ const ProfileGlassModal = ({ open, onClose, title, subtitle }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="profile-modal-title"
-            className="relative z-[1] my-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-white/15 bg-slate-950/55 shadow-[0_0_60px_rgba(34,211,238,0.12)] backdrop-blur-2xl md:rounded-3xl"
+            className="relative z-1 my-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-white/15 bg-slate-950/55 shadow-[0_0_60px_rgba(34,211,238,0.12)] backdrop-blur-2xl md:rounded-3xl"
             initial={{ scale: 0.96, y: 12, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.98, y: 8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 320, damping: 30 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative flex max-h-[min(88vh,860px)] flex-col">
-              <header className="relative z-[2] flex shrink-0 items-start justify-between gap-4 border-b border-white/10 px-5 py-4 md:px-7 md:py-5 bg-slate-950/40 backdrop-blur-md">
+            <div className="relative z-2 flex max-h-[min(88vh,860px)] flex-col">
+              <header className="relative flex shrink-0 items-start justify-between gap-4 border-b border-white/10 px-5 py-4 md:px-7 md:py-5 bg-slate-950/40 backdrop-blur-md">
                 <div className="flex min-w-0 items-center gap-3 md:gap-4">
                   <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-cyan-400/40 shadow-[0_0_20px_rgba(34,211,238,0.3)] md:h-14 md:w-14">
                     <img
@@ -83,11 +83,11 @@ const ProfileGlassModal = ({ open, onClose, title, subtitle }) => {
                 </button>
               </header>
 
-              <div className="relative z-[2] min-h-0 flex-1 overflow-y-auto overscroll-contain">
+              <div className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
                 <NataProfileTimeline />
               </div>
 
-              <footer className="relative z-[2] flex flex-wrap items-center justify-center gap-3 border-t border-white/10 bg-slate-950/40 px-4 py-3 backdrop-blur-md md:justify-end md:px-7">
+              <footer className="relative flex flex-wrap items-center justify-center gap-3 border-t border-white/10 bg-slate-950/40 px-4 py-3 backdrop-blur-md md:justify-end md:px-7">
                 <a
                   href="https://www.instagram.com/devnkimberly/?hl=pt-br"
                   target="_blank"

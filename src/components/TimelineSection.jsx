@@ -82,7 +82,7 @@ const TimelineSection = () => {
       id="sobre"
       className="relative w-full max-w-6xl mx-auto px-6 py-20 flex flex-col scroll-mt-24"
     >
-      <div className="relative z-[1] mb-10 text-center md:mb-12">
+      <div className="relative z-1 mb-10 text-center md:mb-12">
         <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400/90">
           Sobre nós
         </p>
@@ -95,7 +95,7 @@ const TimelineSection = () => {
         </p>
       </div>
 
-      <div className="relative z-[1] grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 items-stretch">
+      <div className="relative z-1 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 items-stretch">
       <TimelineCard
         title="Nossa missão"
         icon={<Target />}

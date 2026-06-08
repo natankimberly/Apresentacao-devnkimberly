@@ -68,7 +68,7 @@ const OrbitingCards = ({
       } ${className}`}
     >
       {centerLabel && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-[1] px-4">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-1 px-4">
           <p className="text-center text-xs md:text-sm text-slate-500/90 font-mono max-w-xs">
             {centerLabel}
           </p>
@@ -201,7 +201,7 @@ const OrbitingCards = ({
         )}
       </div>
 
-      <div className="md:hidden flex flex-col gap-3 px-2 w-full z-[2]">
+      <div className="md:hidden flex flex-col gap-3 px-2 w-full relative z-10">
         {!isProfile ? (
           <>
             {stackCard(

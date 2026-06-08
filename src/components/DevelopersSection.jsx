@@ -97,7 +97,7 @@ const DevelopersSection = () => {
                 onClick={(e) => e.stopPropagation()}
               >
                 <SocialIcon
-                  href="https://www.instagram.com/devnkimberly/?hl=pt-br"
+                  href="https://www.instagram.com/appevoluasoftware/?hl=pt-br"
                   label="Instagram"
                   variant="instagram"
                   icon={<Instagram size={20} />}

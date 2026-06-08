@@ -20,7 +20,8 @@ const ProjectsShowcase = () => {
     "/projetos/sitebelluno/7.jpg",
     "/projetos/contabilidade/1.jpg",
     "/projetos/extensao-whats/1.jpg",
-    "/projetos/extensao-whats/4.jpg",
+    "/projetos/extensao-whats/2.jpg",
+    "/projetos/extensao-whats/3.jpg",
   ];
 
   const imagesRow2 = [
@@ -42,7 +43,8 @@ const ProjectsShowcase = () => {
     "/projetos/sitebelluno/7.jpg",
     "/projetos/contabilidade/1.jpg",
     "/projetos/extensao-whats/1.jpg",
-    "/projetos/extensao-whats/4.jpg",
+    "/projetos/extensao-whats/2.jpg",
+    "/projetos/extensao-whats/3.jpg",
   ];
 
   return (

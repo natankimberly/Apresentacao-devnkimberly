@@ -32,7 +32,7 @@ const TerminalBoot = ({ onComplete }) => {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.7 }}
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-black font-mono text-green-400 text-base sm:text-lg md:text-xl px-6"
+      className="fixed inset-0 z-60 flex items-center justify-center bg-black font-mono text-green-400 text-base sm:text-lg md:text-xl px-6"
     >
       <div className="max-w-4xl w-full text-left leading-relaxed">
         <span className="text-green-500/90">{"> "}</span>

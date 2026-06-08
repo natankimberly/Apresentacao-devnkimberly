@@ -233,7 +233,18 @@ const ProjectModal = ({ project, onClose }) => {
         </div>
 
         {/* Footer Actions */}
-        <div className="p-6 border-t border-white/10 bg-slate-950/30 flex justify-end gap-4 shrink-0">
+        <div className="p-6 border-t border-white/10 bg-slate-950/30 flex flex-wrap justify-end gap-3 shrink-0">
+          {project.links?.map((item) => (
+            <a
+              key={item.url}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-6 py-2 rounded-lg border border-cyan-500/40 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-100 font-medium transition-all"
+            >
+              {item.label} <ExternalLink size={18} className="ml-2" />
+            </a>
+          ))}
           {project.link && (
             <a
               href={project.link}
@@ -255,6 +266,112 @@ const ProjectGrid = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projetosProprios = [
+    {
+      title: "WorkChat",
+      shortDescription:
+        "Plataforma de chat empresarial integrada à WhatsApp. Pensado para grandes e pequenas empresas.",
+      descriptionIntro: "Frontend React | Backend Node.js",
+      fullDescription: (
+        <>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Plataforma web multi-tenant de atendimento corporativo e automação:
+          </h4>
+          <p>
+            Desenvolvida para escalar e centralizar a comunicação de empresas
+            com isolamento total de dados e alta performance.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Arquitetura Multi-tenant:
+          </h4>
+          <p>
+            Isolamento lógico completo entre empresas inquilinas, painel
+            Super-Admin para gestão de contas e personalização de interface
+            (White-label) com a identidade visual de cada cliente.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Inteligência Artificial Setorizada (LLM):
+          </h4>
+          <p>
+            Atendimento de primeiro nível automatizado com agentes de IA
+            configuráveis por departamento. Desenvolvido com uma arquitetura
+            orientada a eventos que conecta o fluxo do WhatsApp a Modelos de
+            Linguagem, permitindo contextos exclusivos por setor e transbordo
+            (handover) inteligente e imperceptível para atendentes humanos.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            CRM, Módulo Financeiro e Rastreio de Pedidos:
+          </h4>
+          <p>
+            Pipeline completo para gestão de leads, cobranças e funil de vendas.
+            Inclui um motor de notificações transacionais que dispara
+            atualizações automáticas de status de pedidos em tempo real
+            diretamente no WhatsApp do cliente final, elevando a transparência e
+            a experiência do consumidor.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Motor de Faturamento Automatizado:
+          </h4>
+          <p>
+            Integração nativa com a API do Pagar.me. Inclui sincronização via
+            Webhooks criptografados e sistema inteligente de Soft/Hard Lockout
+            com período de carência para gestão de inadimplência.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Integração Avançada de mensagens:
+          </h4>
+          <p>
+            Conexão centralizada com o WhatsApp (via API/Baileys), permitindo
+            que toda a empresa opere sobre um único número corporativo, ou
+            setores com cada número próprio, varias instancias e usuários
+            estáveis na arquitetura.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Roteamento Inteligente e Filas:
+          </h4>
+          <p>
+            Motor de distribuição e encaminhamento automático de chamadas e
+            mensagens para setores ou usuários específicos, otimizando o fluxo de
+            atendimento.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Segurança e Infraestrutura Enterprise:
+          </h4>
+          <p>
+            Deploy conteinerizado (Docker) com proxy reverso (Traefik). Conta com
+            captura de IP blindada contra spoofing, proteção avançada contra
+            Brute Force, Rate Limiting e prevenção de vazamento de memória
+            (Memory Leaks) em WebSockets, entre outros pontos de cyber-segurança
+            tratados na aplicação.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Módulo de Helpdesk Interno:
+          </h4>
+          <p>
+            Sistema de chamados integrado com Kanban para gestão de suporte
+            técnico (acionamentos - empresas a equipe de suporte) incluindo
+            alertas em tempo real para o Super-Admin diretamente via WhatsApp
+            para cada novo chamado importante recebido, trazendo um curto tempo
+            de SLA.
+          </p>
+        </>
+      ),
+      tags: ["React", "Node", "Redis", "Roteamento Inteligente e Filas", "WhatsApp API oficial + Baileys", "API Pagar.me", "IA Setorizada", "CRM",],
+      status: "Disponivel para contratação",
+      icon: <MessageCircle size={28} />,
+      image: "/images/workchat.png",
+      gallery: [
+        "/projetos/workchat/1.jpg",
+        "/projetos/workchat/2.jpg",
+        "/projetos/workchat/3.jpg",
+        "/projetos/workchat/4.jpg",
+        "/projetos/workchat/5.jpg",
+        "/projetos/workchat/6.jpg",
+        "/projetos/workchat/7.jpg",
+        "/projetos/workchat/8.jpg",
+      ],
+      video: "https://www.youtube.com/embed/PiDd4-zs_E0",
+      link: "https://workchat.appevolua.com.br/",
+    },
     {
       title: "Hub Machines",
       shortDescription:
@@ -284,6 +401,18 @@ const ProjectGrid = () => {
             autorizadas. Controle programas instalados e monitore a navegação
             web das suas maquinas.
           </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            Stack técnica e agente de comunicação
+          </h4>
+          <p>
+            Frontend em React com interface responsiva e painéis interativos em
+            tempo real. Backend em PHP Laravel para APIs, autenticação, regras de
+            negócio e gestão centralizada da plataforma. Agente de comunicação
+            desenvolvido em Go pela leveza e eficiência na coleta e envio de
+            telemetria das máquinas, com bibliotecas ideais para baixo consumo
+            de recursos, execução estável em segundo plano e comunicação segura
+            com o servidor.
+          </p>
         </>
       ),
       tags: ["React", "PHP", "Laravel", "Monitoramento"],
@@ -302,46 +431,6 @@ const ProjectGrid = () => {
       video: "https://www.youtube.com/embed/lHwJ60mbxZc",
       isShort: true,
       link: "https://assinehubmachines.appevolua.com.br/",
-    },
-    {
-      title: "WorkChat",
-      shortDescription:
-        "Plataforma de chat empresarial integrada à WhatsApp Business. Pensado para grandes e pequenas empresas.",
-      descriptionIntro: "Frontend React | Backend Node.js",
-      fullDescription: (
-        <>
-          <p>
-            Plataforma multi-tenant que permite que múltiplas empresas utilizem
-            o sistema de forma isolada.
-          </p>
-          <ul className="list-disc pl-5 mt-2 space-y-1">
-            <li>
-              Integração com WhatsApp Business API, seu número centralizado para
-              todos os seus clientes.
-            </li>
-            <li>Encaminhamento automático para setores e usuários.</li>
-            <li>
-              Plataforma de chat corporativo personalizada com a cara da sua
-              empresa.
-            </li>
-          </ul>
-        </>
-      ),
-      tags: ["React", "Node", "SaaS"],
-      status: "Disponivel para contratação",
-      icon: <MessageCircle size={28} />,
-      image: "/images/workchat.png",
-      gallery: [
-        "/projetos/workchat/1.jpg",
-        "/projetos/workchat/2.jpg",
-        "/projetos/workchat/3.jpg",
-        "/projetos/workchat/4.jpg",
-        "/projetos/workchat/5.jpg",
-        "/projetos/workchat/6.jpg",
-        "/projetos/workchat/7.jpg",
-        "/projetos/workchat/8.jpg",
-      ],
-      link: "https://workchat.appevolua.com.br/",
     },
     {
       title: "WorkControl Tower",
@@ -391,15 +480,11 @@ const ProjectGrid = () => {
           </p>
         </>
       ),
-      tags: [
-        "SaaS",
-        "Multitenant",
-        "Kanban",
-        "Laravel 12",
-        "PHP 8.3+",
-        "Vue 3",
+        tags: [
+        "PHP - Laravel",
+        "Vue - Vue 3",
         "Inertia.js",
-        "Tailwind v4",
+        "Tailwind CSS",
         "PostgreSQL",
         "Reverb + Echo",
       ],
@@ -442,10 +527,17 @@ const ProjectGrid = () => {
         "/projetos/extensao-whats/1.jpg",
         "/projetos/extensao-whats/2.jpg",
         "/projetos/extensao-whats/3.jpg",
-        "/projetos/extensao-whats/4.jpg",
-        "/projetos/extensao-whats/5.jpg",
       ],
-      link: null,
+      links: [
+        {
+          label: "Instalar no Chrome",
+          url: "https://chromewebstore.google.com/detail/assinatura-whatsweb-%3Cdevn/nijakjhidfgmognjafijhniejgnoclkm?hl=pt-BR&utm_source=ext_sidebar",
+        },
+        {
+          label: "Instalar no Firefox",
+          url: "https://addons.mozilla.org/pt-BR/firefox/addon/assinaturaweb-workchat/",
+        },
+      ],
     },
     {
       title: "App Vôlei Corporativo",
@@ -486,7 +578,7 @@ const ProjectGrid = () => {
         <>
           <p>
             Site de uma empresa cliente. Totalmente personalizável com acesso ao
-            administrador para controle do setor de Marketing.
+            administrador para controle do setor de Marketing / RH / Financeiro.
           </p>
           <ul className="list-disc pl-5 mt-4 space-y-2">
             <li>Feed de notícias personalizável (estilo Instagram).</li>
@@ -496,6 +588,16 @@ const ProjectGrid = () => {
             </li>
             <li>Área de divulgação de vagas (RH).</li>
             <li>Sistema gerador de assinaturas de e-mail corporativas.</li>
+            <li>
+              Módulo de consultas NF-e e XML - Sefaz via API WebService +
+              Consumo de API Sistema Contabilidade da empresa.
+            </li>
+            <li>Módulo de controle de acesso e permissões.</li>
+            <li>
+              Proteções contra ataques de DDoS, SQL Injection, XSS, CSRF,
+              Clickjacking, Cross-Site Request Forgery (CSRF), Cross-Site
+              Scripting (XSS). e etc...
+            </li>
           </ul>
         </>
       ),
@@ -670,7 +772,7 @@ const ProjectGrid = () => {
         "/projetos/mercadao/3.jpg",
         "/projetos/mercadao/4.jpg",
       ],
-      link: null,
+      link: "https://mercadaodosoculos.appevolua.com.br/",
     },
   ];
 
