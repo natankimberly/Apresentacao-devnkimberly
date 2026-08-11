@@ -25,6 +25,7 @@ import Lanyard from "./react-bits/Lanyard";
 import { useModalLock } from "../hooks/useModalLock";
 
 const FEROLIA_SRC = "/ferolia.jpeg";
+const FEROLIA_URL = "https://ferolia.appevolua.com.br/";
 
 /** Impede que falha do 3D derrube o card (fundo + textos continuam). */
 class LanyardErrorBoundary extends Component {
@@ -241,6 +242,26 @@ const ConfidentialOrbitShowcase = () => {
                 </Suspense>
               </LanyardErrorBoundary>
             ) : null}
+          </div>
+
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex justify-center bg-linear-to-t from-slate-950/90 via-slate-950/40 to-transparent px-4 pb-5 pt-16 md:pb-6">
+            <SpecularButton
+              size="md"
+              radius={14}
+              tint="#b91c1c"
+              tintOpacity={0.18}
+              textColor="#fecaca"
+              lineColor="#f87171"
+              baseColor="#7f1d1d"
+              intensity={1.1}
+              followMouse
+              className="pointer-events-auto cursor-target inline-flex items-center"
+              onClick={() =>
+                window.open(FEROLIA_URL, "_blank", "noopener,noreferrer")
+              }
+            >
+              FerolIA <ExternalLink size={18} className="ml-2" />
+            </SpecularButton>
           </div>
         </div>
       </BorderGlow>
