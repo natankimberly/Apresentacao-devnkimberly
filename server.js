@@ -1,4 +1,3 @@
-/* eslint-env node */
 import express from 'express';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
@@ -19,7 +18,7 @@ const isProd = process.env.NODE_ENV === "production";
 /** Limita POST /api/visits (evita inflar o contador com script). */
 const postVisitTimestamps = new Map();
 const POST_VISIT_MIN_MS = 3000;
-const POST_VISIT_WINDOW_MS = 60_000;
+const POST_VISIT_WINDOW_MS = 60000;
 const POST_VISIT_MAX_PER_WINDOW = 30;
 
 function rateLimitPostVisits(req, res, next) {

@@ -152,7 +152,7 @@ const NeuralBackground = ({ embedded = false }) => {
         ref={canvasRef} 
         className={
           embedded
-            ? "absolute inset-0 w-full h-full z-0 pointer-events-none bg-slate-950/30"
+            ? "absolute inset-0 w-full h-full z-0 pointer-events-none"
             : "fixed top-0 left-0 w-full h-full -z-10 bg-slate-950"
         }
     />

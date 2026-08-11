@@ -6,7 +6,7 @@ const ICON = 22;
 const NataProfileTimeline = () => {
   return (
     <div className="relative mx-auto w-full max-w-3xl px-3 pb-2 pt-2 md:px-4">
-      <div className="absolute left-[14px] top-0 bottom-0 w-[2px] bg-linear-to-b from-transparent via-cyan-900/50 to-transparent md:left-1/2 md:-translate-x-1/2" />
+      <div className="absolute left-3.5 top-0 bottom-0 w-0.5 bg-linear-to-b from-transparent via-cyan-900/50 to-transparent md:left-1/2 md:-translate-x-1/2" />
 
       <TimelineCard
         title="Objetivo"

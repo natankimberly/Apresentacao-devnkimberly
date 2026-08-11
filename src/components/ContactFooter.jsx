@@ -1,15 +1,16 @@
 import { ArrowUp } from "lucide-react";
 import VisitCounter from "./VisitCounter";
+import SpecularButton from "./react-bits/SpecularButton";
 
 const ContactFooter = () => {
   return (
     <footer
       id="contato"
-      className="relative z-40 scroll-mt-24 py-12 px-6 mt-24 border-t border-white/5 bg-slate-950/50 backdrop-blur-sm"
+      className="relative z-40 scroll-mt-28 py-12 px-6 mt-24 border-t border-white/5 bg-slate-950/50 backdrop-blur-sm"
     >
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="text-center md:text-left">
-          <h2 className="text-2xl font-bold text-white mb-2">
+          <h2 className="cursor-target text-2xl font-bold text-white mb-2">
             Solicite um orçamento
           </h2>
           <p className="text-cyan-400">
@@ -20,12 +21,26 @@ const ContactFooter = () => {
             App Evolua Software — produtos, SaaS, mobile, automação e painéis
             administrativos.
           </p>
-          <a
-            href="mailto:devnkimberly@appevolua.com.br?subject=Or%C3%A7amento%20-%20App%20Evolua%20Software"
-            className="mt-5 inline-flex items-center justify-center rounded-full border border-cyan-500/40 bg-cyan-500/15 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-500/25"
-          >
-            Enviar e-mail
-          </a>
+          <div className="mt-5">
+            <SpecularButton
+              size="md"
+              radius={999}
+              tint="#22d3ee"
+              tintOpacity={0.12}
+              textColor="#ecfeff"
+              lineColor="#67e8f9"
+              baseColor="#164e63"
+              intensity={1.1}
+              followMouse
+              className="cursor-target"
+              onClick={() => {
+                window.location.href =
+                  "mailto:devnkimberly@appevolua.com.br?subject=Or%C3%A7amento%20-%20App%20Evolua%20Software";
+              }}
+            >
+              Enviar e-mail
+            </SpecularButton>
+          </div>
         </div>
       </div>
 

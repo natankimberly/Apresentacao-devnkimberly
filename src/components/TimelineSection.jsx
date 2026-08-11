@@ -1,6 +1,19 @@
 import { motion as Motion } from 'framer-motion';
 import { Tilt } from 'react-tilt';
 import { Target, Cpu } from 'lucide-react';
+import BorderGlow from './react-bits/BorderGlow';
+
+const GLOW = {
+  backgroundColor: '#0f172a',
+  borderRadius: 24,
+  glowRadius: 28,
+  glowIntensity: 1.2,
+  fillOpacity: 0.34,
+  coneSpread: 28,
+  edgeSensitivity: 16,
+  glowColor: '186 85 60',
+  colors: ['#38bdf8', '#22d3ee', '#67e8f9'],
+};
 
 export const TimelineCard = ({
   title,
@@ -39,38 +52,40 @@ export const TimelineCard = ({
       {connectors && (
         <>
           <div
-            className={`hidden md:block absolute ${connectorTop} w-[55%] h-[2px] bg-linear-to-r from-cyan-500/50 to-transparent ${alignment === "left" ? "right-[-55%] rotate-0" : "left-[-55%] rotate-180"}`}
+            className={`hidden md:block absolute ${connectorTop} w-[55%] h-0.5 bg-linear-to-r from-cyan-500/50 to-transparent ${alignment === "left" ? "right-[-55%] rotate-0" : "left-[-55%] rotate-180"}`}
           ></div>
           <div
-            className={`hidden md:block absolute ${dotTop} w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_cyan] ${alignment === "left" ? "right-[-55px]" : "left-[-55px]"}`}
+            className={`hidden md:block absolute ${dotTop} w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_cyan] ${alignment === "left" ? "-right-13.75" : "-left-13.75"}`}
           ></div>
         </>
       )}
 
       <Tilt options={defaultOptions} className="block h-full min-h-0">
-        <div
-          className={`flex min-h-0 flex-col rounded-3xl bg-slate-900/40 backdrop-blur-md border border-white/10 hover:border-cyan-400/50 transition-colors shadow-2xl group ${compact ? "p-6 md:p-8" : "p-10 md:p-12"}`}
-        >
+        <BorderGlow className="h-full" {...GLOW}>
           <div
-            className={`flex items-center border-b border-white/5 pb-6 ${compact ? "gap-4 mb-5" : "gap-6 mb-8"}`}
+            className={`flex min-h-0 flex-col rounded-3xl bg-transparent group ${compact ? "p-6 md:p-8" : "p-10 md:p-12"}`}
           >
             <div
-              className={`rounded-2xl bg-slate-800 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all shadow-[0_0_20px_rgba(34,211,238,0.25)] ${compact ? "p-3" : "p-4"}`}
+              className={`flex items-center border-b border-white/5 pb-6 ${compact ? "gap-4 mb-5" : "gap-6 mb-8"}`}
             >
-              {icon}
+              <div
+                className={`rounded-2xl bg-slate-800 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all shadow-[0_0_20px_rgba(34,211,238,0.25)] ${compact ? "p-3" : "p-4"}`}
+              >
+                {icon}
+              </div>
+              <h3
+                className={`font-bold text-slate-100 tracking-tight ${compact ? "text-xl md:text-2xl" : "text-3xl md:text-4xl"}`}
+              >
+                {title}
+              </h3>
             </div>
-            <h3
-              className={`font-bold text-slate-100 tracking-tight ${compact ? "text-xl md:text-2xl" : "text-3xl md:text-4xl"}`}
+            <div
+              className={`text-slate-300 leading-relaxed font-light space-y-6 ${compact ? "text-sm md:text-base" : "text-lg md:text-xl"}`}
             >
-              {title}
-            </h3>
+              {children}
+            </div>
           </div>
-          <div
-            className={`text-slate-300 leading-relaxed font-light space-y-6 ${compact ? "text-sm md:text-base" : "text-lg md:text-xl"}`}
-          >
-            {children}
-          </div>
-        </div>
+        </BorderGlow>
       </Tilt>
     </Motion.div>
   );
@@ -86,7 +101,7 @@ const TimelineSection = () => {
         <p className="text-sm font-semibold uppercase tracking-widest text-cyan-400/90">
           Sobre nós
         </p>
-        <h2 className="mt-2 text-3xl font-bold text-white md:text-4xl">
+        <h2 className="cursor-target mt-2 text-3xl font-bold text-white md:text-4xl">
           Como a App Evolua Software trabalha
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-slate-400">

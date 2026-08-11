@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { motion as Motion, useScroll, useTransform } from "framer-motion";
 import NeuralBackground from "./components/NeuralBackground";
 import TerminalBoot from "./components/TerminalBoot";
@@ -7,11 +7,11 @@ import HeroTypewriter from "./components/HeroTypewriter";
 import TimelineSection from "./components/TimelineSection";
 import ProjectGrid from "./components/ProjectGrid";
 import ContactFooter from "./components/ContactFooter";
-import ProjectsShowcase from "./components/ProjectsShowcase";
 import PhotoGallery from "./components/PhotoGallery";
-import ServicesFaq from "./components/ServicesFaq";
 import DevelopersSection from "./components/DevelopersSection";
 import SeoContractProjectsJsonLd from "./components/SeoContractProjectsJsonLd";
+import Particles from "./components/react-bits/Particles";
+import TargetCursor from "./components/react-bits/TargetCursor";
 import { Code2, ChevronDown } from "lucide-react";
 
 const ScrollIndicator = () => {
@@ -41,12 +41,41 @@ function App() {
   const [bootComplete, setBootComplete] = useState(false);
   const containerRef = useRef(null);
 
+  const particleProps = useMemo(() => {
+    const mobile =
+      typeof window !== "undefined" && window.innerWidth < 768;
+    return {
+      particleCount: mobile ? 120 : 220,
+      particleBaseSize: mobile ? 90 : 120,
+      particleSpread: mobile ? 9 : 11,
+      speed: 0.1,
+    };
+  }, []);
+
   return (
     <div
       className={`relative min-h-screen bg-transparent text-white selection:bg-cyan-500/30 ${!bootComplete ? "h-screen overflow-hidden" : "overflow-x-hidden"}`}
     >
       <SeoContractProjectsJsonLd />
-      <NeuralBackground />
+
+      {/* Fundo: neural + particles na mesma pilha (particles acima do canvas neural) */}
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-slate-950">
+        <NeuralBackground embedded />
+        <div className="absolute inset-0 z-1">
+          <Particles
+            particleColors={["#ffffff", "#a5f3fc", "#e2e8f0"]}
+            particleCount={particleProps.particleCount}
+            particleSpread={particleProps.particleSpread}
+            speed={particleProps.speed}
+            particleBaseSize={particleProps.particleBaseSize}
+            sizeRandomness={0.8}
+            moveParticlesOnHover={false}
+            alphaParticles={false}
+            disableRotation={false}
+            pixelRatio={typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 1.5) : 1}
+          />
+        </div>
+      </div>
 
       {!bootComplete && (
         <TerminalBoot onComplete={() => setBootComplete(true)} />
@@ -54,27 +83,34 @@ function App() {
 
       <CorporateHeader visible={bootComplete} />
 
-      {bootComplete && <ScrollIndicator />}
+      {bootComplete && (
+        <>
+          <TargetCursor
+            spinDuration={2.4}
+            hideDefaultCursor
+            parallaxOn
+            cursorColor="#67e8f9"
+            cursorColorOnTarget="#22d3ee"
+          />
+          <ScrollIndicator />
+        </>
+      )}
 
       <div
         ref={containerRef}
         className={`relative transition-opacity duration-1000 ${bootComplete ? "opacity-100" : "opacity-0"}`}
       >
-        <div className="relative w-full flex flex-col pt-16 md:pt-20">
+        <div className="relative w-full flex flex-col pt-20 md:pt-24">
           <HeroTypewriter />
 
-          <div className="relative z-10 w-full">
-            <ProjectsShowcase />
-          </div>
-
-          <div className="relative z-10 w-full mt-0 md:-mt-12">
+          <div id="projetos" className="relative z-10 w-full scroll-mt-28">
             <PhotoGallery />
           </div>
 
-          <div className="relative z-10 text-center mt-12 mb-8 px-4">
+          <div id="portfolio" className="relative z-10 text-center mt-12 mb-8 px-4 scroll-mt-28">
             <div className="inline-flex items-center justify-center p-4 rounded-full bg-slate-900/80 border border-violet-500/30 text-violet-400 shadow-[0_0_30px_rgba(139,92,246,0.3)]">
               <Code2 size={36} className="mr-3 md:w-10 md:h-10" />
-              <span className="text-2xl md:text-3xl font-bold text-white uppercase tracking-widest">
+              <span className="cursor-target text-2xl md:text-3xl font-bold text-white uppercase tracking-widest">
                 Portfólio
               </span>
             </div>
@@ -87,8 +123,6 @@ function App() {
           <div className="relative z-10 w-full mb-8">
             <ProjectGrid />
           </div>
-
-          <ServicesFaq />
 
           <div className="relative z-10 w-full">
             <TimelineSection />

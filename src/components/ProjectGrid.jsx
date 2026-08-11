@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef, Suspense, Component } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { Tilt } from "react-tilt";
 import {
@@ -17,6 +17,41 @@ import {
   Glasses,
 } from "lucide-react";
 import { createPortal } from "react-dom";
+import BorderGlow from "./react-bits/BorderGlow";
+import SpecularButton from "./react-bits/SpecularButton";
+import ShinyText from "./react-bits/ShinyText";
+import GlitchText from "./react-bits/GlitchText";
+import Lanyard from "./react-bits/Lanyard";
+import { useModalLock } from "../hooks/useModalLock";
+
+const FEROLIA_SRC = "/ferolia.jpeg";
+
+/** Impede que falha do 3D derrube o card (fundo + textos continuam). */
+class LanyardErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
+}
+
+const GLOW_CYAN = {
+  backgroundColor: "#0f172a",
+  borderRadius: 16,
+  glowRadius: 26,
+  glowIntensity: 1.15,
+  fillOpacity: 0.32,
+  coneSpread: 28,
+  edgeSensitivity: 16,
+  glowColor: "186 85 60",
+  colors: ["#38bdf8", "#22d3ee", "#67e8f9"],
+};
 
 const defaultTiltOptions = {
   reverse: false,
@@ -37,58 +72,181 @@ const ProjectCard = ({ project, onClick }) => (
     onClick={() => onClick(project)}
     whileHover={{ y: -5 }}
     whileTap={{ scale: 0.98 }}
-    className={`col-span-1 border-white/5 border rounded-2xl md:col-span-1`}
+    className="col-span-1 rounded-2xl md:col-span-1"
   >
-    <Tilt options={defaultTiltOptions} className="h-full">
-      <div className="group relative h-full overflow-hidden rounded-2xl bg-slate-900/40 backdrop-blur-md p-8 cursor-pointer transition-all hover:bg-slate-800/60 hover:border-cyan-500/30">
-        <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    <BorderGlow className="h-full" {...GLOW_CYAN}>
+      <Tilt options={defaultTiltOptions} className="h-full">
+        <div className="group relative h-full overflow-hidden rounded-2xl bg-slate-900/40 backdrop-blur-md p-8 cursor-pointer transition-all hover:bg-slate-800/60">
+          <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-        <div className="relative z-10 h-full flex flex-col">
-          <div className="flex justify-between items-start mb-6">
-            <div className="p-4 rounded-xl bg-slate-800/50 border border-white/5 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors overflow-hidden">
-              {project.image ? (
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-10 h-10 object-contain"
-                />
-              ) : (
-                project.icon
-              )}
-            </div>
-            <span
-              className={`text-sm px-3 py-1.5 rounded-full border border-white/10 font-medium whitespace-nowrap ${project.status === "Em Desenvolvimento" || project.status === "Em Andamento" ? "bg-amber-500/10 text-amber-400 border-amber-500/20" : "bg-green-500/10 text-green-400 border-green-500/20"}`}
-            >
-              {project.status}
-            </span>
-          </div>
-
-          <h3 className="text-2xl font-bold text-white mb-4">
-            {project.title}
-          </h3>
-          <p className="text-slate-400 text-base mb-8 grow line-clamp-3 leading-relaxed">
-            {project.shortDescription}
-          </p>
-
-          <div className="flex flex-wrap gap-2 mt-auto">
-            {project.tags.map((tag, i) => (
+          <div className="relative z-10 h-full flex flex-col">
+            <div className="flex justify-between items-start mb-6">
+              <div className="p-4 rounded-xl bg-slate-800/50 border border-white/5 text-cyan-400 group-hover:bg-cyan-500/20 transition-colors overflow-hidden">
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-10 h-10 object-contain"
+                  />
+                ) : (
+                  project.icon
+                )}
+              </div>
               <span
-                key={i}
-                className="text-xs px-2 py-1 rounded bg-slate-950 text-slate-300 border border-slate-800"
+                className={`text-sm px-3 py-1.5 rounded-full border border-white/10 font-medium whitespace-nowrap ${project.status === "Em Desenvolvimento" || project.status === "Em Andamento" ? "bg-amber-500/10 text-amber-400 border-amber-500/20" : "bg-green-500/10 text-green-400 border-green-500/20"}`}
               >
-                {tag}
+                {project.status}
               </span>
-            ))}
-          </div>
+            </div>
 
-          <div className="mt-4 flex items-center text-cyan-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-            Ver detalhes <Info size={14} className="ml-1" />
+            <h3 className="cursor-target text-2xl font-bold text-white mb-4">
+              {project.title}
+            </h3>
+            <p className="text-slate-400 text-base mb-8 grow line-clamp-3 leading-relaxed">
+              {project.shortDescription}
+            </p>
+
+            <div className="flex flex-wrap gap-2 mt-auto">
+              {project.tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="text-xs px-2 py-1 rounded bg-slate-950 text-slate-300 border border-slate-800"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-4 flex items-center text-cyan-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+              Ver detalhes <Info size={14} className="ml-1" />
+            </div>
           </div>
         </div>
-      </div>
-    </Tilt>
+      </Tilt>
+    </BorderGlow>
   </Motion.div>
 );
+
+const ConfidentialOrbitShowcase = () => {
+  const hostRef = useRef(null);
+  const [mount3d, setMount3d] = useState(false);
+
+  // Monta o Three só perto da viewport e DESMONTA ao sair — libera o
+  // contexto WebGL. Sem isso, SpecularButtons + Particles matam o Lanyard no F5.
+  useEffect(() => {
+    const el = hostRef.current;
+    if (!el) return;
+
+    let alive = true;
+    const sync = (want) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (!alive || !hostRef.current) return;
+          if (!want) {
+            setMount3d(false);
+            return;
+          }
+          const r = hostRef.current.getBoundingClientRect();
+          setMount3d(r.width >= 120 && r.height >= 120);
+        });
+      });
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => sync(Boolean(entry?.isIntersecting)),
+      { rootMargin: "160px 0px", threshold: 0.01 },
+    );
+    io.observe(el);
+
+    const ro = new ResizeObserver(() => {
+      if (!hostRef.current) return;
+      const r = hostRef.current.getBoundingClientRect();
+      const onScreen =
+        r.bottom > -160 && r.top < window.innerHeight + 160;
+      if (onScreen) sync(true);
+    });
+    ro.observe(el);
+
+    return () => {
+      alive = false;
+      io.disconnect();
+      ro.disconnect();
+    };
+  }, []);
+
+  return (
+    <Motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.55 }}
+      className="mb-10 w-full"
+    >
+      <BorderGlow
+        className="mx-auto h-[min(82vh,720px)] min-h-130 w-full max-w-5xl md:min-h-155"
+        {...GLOW_CYAN}
+        backgroundColor="#0f172a"
+        borderRadius={24}
+        glowRadius={32}
+        glowIntensity={1.25}
+        fillOpacity={0.36}
+      >
+        <div className="relative h-full w-full overflow-hidden rounded-3xl bg-slate-950">
+          <img
+            src={FEROLIA_SRC}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-[center_20%]"
+            decoding="async"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 z-1 rounded-3xl bg-slate-950/50"
+            aria-hidden="true"
+          />
+
+          <div className="pointer-events-none absolute top-5 left-5 z-20 max-w-[92%] text-left md:top-8 md:left-8">
+            <GlitchText
+              speed={0.85}
+              enableShadows
+              enableOnHover={false}
+              className="m-0! block! text-left! text-4xl! leading-none! whitespace-normal! sm:text-5xl! md:text-6xl! lg:text-7xl!"
+            >
+              Confidencial
+            </GlitchText>
+            <GlitchText
+              speed={1}
+              enableShadows
+              enableOnHover={false}
+              className="mt-3! m-0! block! text-left! text-3xl! leading-none! whitespace-normal! sm:text-4xl! md:text-5xl! lg:text-6xl!"
+            >
+              Em Breve
+            </GlitchText>
+          </div>
+
+          <div ref={hostRef} className="absolute inset-0 z-10 h-full w-full">
+            {mount3d ? (
+              <LanyardErrorBoundary>
+                <Suspense fallback={null}>
+                  <Lanyard
+                    key="confidential-lanyard"
+                    position={[0, 0, 20]}
+                    gravity={[0, -40, 0]}
+                    fov={20}
+                    frontImage={FEROLIA_SRC}
+                    backImage={FEROLIA_SRC}
+                    imageFit="cover"
+                    lanyardWidth={0.85}
+                    lanyardColor="#b91c1c"
+                  />
+                </Suspense>
+              </LanyardErrorBoundary>
+            ) : null}
+          </div>
+        </div>
+      </BorderGlow>
+    </Motion.div>
+  );
+};
 
 const ImageSlider = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -156,106 +314,128 @@ const ImageSlider = ({ images }) => {
 };
 
 const ProjectModal = ({ project, onClose }) => {
+  useModalLock(!!project);
+
   if (!project) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-9999 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-300 flex items-center justify-center overflow-hidden p-4">
       <Motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm"
+        className="absolute inset-0 cursor-auto bg-slate-950/80 backdrop-blur-sm"
       />
       <Motion.div
         layoutId={`card-${project.title}`}
-        className="relative w-full max-w-6xl bg-slate-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+        role="dialog"
+        aria-modal="true"
+        className="relative z-10 flex h-[min(90vh,900px)] w-full max-w-6xl flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="p-6 border-b border-white/10 flex items-center justify-between bg-slate-800/50 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="text-cyan-400 flex items-center justify-center">
-              {project.image ? (
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-10 h-10 object-contain"
-                />
-              ) : (
-                project.icon
-              )}
-            </div>
-            <h2 className="text-2xl font-bold text-white">{project.title}</h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-full hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-          >
-            <X size={24} />
-          </button>
-        </div>
-
-        {/* Content */}
-        <div className="p-8 overflow-y-auto custom-scrollbar">
-          {/* Dynamic Image Slider using public folders */}
-          <ImageSlider images={project.gallery} />
-
-          <p className="text-lg text-slate-300 mb-6 leading-relaxed">
-            {project.descriptionIntro}
-          </p>
-
-          {project.fullDescription && (
-            <div className="space-y-6 text-slate-400 font-light">
-              {project.fullDescription}
-            </div>
-          )}
-
-          {project.video && (
-            <div
-              className={`mt-8 rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-black ${project.isShort ? "max-w-xs mx-auto" : ""}`}
-            >
-              <div
-                className={`relative w-full ${project.isShort ? "pb-[177.78%]" : "pb-[56.25%]"}`}
-              >
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full"
-                  src={project.video}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
+        <BorderGlow
+          className="flex h-full min-h-0 flex-col overflow-hidden"
+          backgroundColor="#0f172a"
+          borderRadius={20}
+          glowRadius={28}
+          glowIntensity={1.15}
+          fillOpacity={0.3}
+          coneSpread={26}
+          edgeSensitivity={16}
+          glowColor="186 85 60"
+          colors={["#38bdf8", "#22d3ee", "#67e8f9"]}
+        >
+          {/* Header */}
+          <div className="flex shrink-0 items-center justify-between border-b border-white/10 bg-slate-800/50 p-6">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center text-cyan-400">
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-10 w-10 object-contain"
+                  />
+                ) : (
+                  project.icon
+                )}
               </div>
+              <h2 className="text-2xl font-bold text-white">{project.title}</h2>
             </div>
-          )}
-        </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="cursor-pointer rounded-full p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              <X size={24} />
+            </button>
+          </div>
 
-        {/* Footer Actions */}
-        <div className="p-6 border-t border-white/10 bg-slate-950/30 flex flex-wrap justify-end gap-3 shrink-0">
-          {project.links?.map((item) => (
-            <a
-              key={item.url}
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center px-6 py-2 rounded-lg border border-cyan-500/40 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-100 font-medium transition-all"
-            >
-              {item.label} <ExternalLink size={18} className="ml-2" />
-            </a>
-          ))}
-          {project.link && (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-medium transition-all hover:shadow-[0_0_15px_rgba(8,145,178,0.5)]"
-            >
-              Acessar Projeto <ExternalLink size={18} className="ml-2" />
-            </a>
-          )}
-        </div>
+          {/* Content */}
+          <div
+            data-modal-scroll
+            className="custom-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-contain p-8"
+            onWheel={(e) => e.stopPropagation()}
+          >
+            <ImageSlider images={project.gallery} />
+
+            <p className="mb-6 text-lg leading-relaxed text-slate-300">
+              {project.descriptionIntro}
+            </p>
+
+            {project.fullDescription && (
+              <div className="space-y-6 font-light text-slate-400">
+                {project.fullDescription}
+              </div>
+            )}
+
+            {project.video && (
+              <div
+                className={`mt-8 overflow-hidden rounded-xl border border-white/10 bg-black shadow-2xl ${project.isShort ? "mx-auto max-w-xs" : ""}`}
+              >
+                <div
+                  className={`relative w-full ${project.isShort ? "pb-[177.78%]" : "pb-[56.25%]"}`}
+                >
+                  <iframe
+                    className="absolute top-0 left-0 h-full w-full"
+                    src={project.video}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Footer Actions */}
+          <div className="flex shrink-0 flex-wrap justify-end gap-3 border-t border-white/10 bg-slate-950/30 p-6">
+            {project.links?.map((item) => (
+              <SpecularButton
+                key={item.url}
+                onClick={() =>
+                  window.open(item.url, "_blank", "noopener,noreferrer")
+                }
+                className="flex items-center"
+              >
+                {item.label} <ExternalLink size={18} className="ml-2" />
+              </SpecularButton>
+            ))}
+            {project.link && (
+              <SpecularButton
+                onClick={() =>
+                  window.open(project.link, "_blank", "noopener,noreferrer")
+                }
+                className="flex items-center"
+              >
+                Acessar Projeto <ExternalLink size={18} className="ml-2" />
+              </SpecularButton>
+            )}
+          </div>
+        </BorderGlow>
       </Motion.div>
     </div>,
     document.body,
@@ -789,7 +969,7 @@ const ProjectGrid = () => {
 
       {/* Projetos próprios — âncora #contratar (header) */}
       <div id="contratar" className="mb-16 scroll-mt-24">
-        <h2 className="text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4 inline-block">
+        <h2 className="cursor-target text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4 inline-block">
           Produtos e plataformas Evolua
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
@@ -803,11 +983,20 @@ const ProjectGrid = () => {
         </div>
       </div>
 
-      {/* Projetos Contratados */}
-      <div>
-        <h2 className="text-3xl font-bold text-white mb-8 border-b border-white/10 pb-4 inline-block">
-          Cases e entregas para clientes
+      {/* Projetos Contratados — âncora #clientes (atalho Serviços no header) */}
+      <div id="clientes" className="scroll-mt-24">
+        <h2 className="mb-8 border-b border-white/10 pb-4">
+          <ShinyText
+            text="Clientes que confiaram na Evolua Software"
+            speed={2.4}
+            color="#94a3b8"
+            shineColor="#ffffff"
+            className="cursor-target text-2xl md:text-3xl font-bold"
+          />
         </h2>
+
+        <ConfidentialOrbitShowcase />
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projetosContratados.map((proj, i) => (
             <ProjectCard

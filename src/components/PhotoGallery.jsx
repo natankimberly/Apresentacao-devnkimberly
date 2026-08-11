@@ -1,97 +1,127 @@
-import { motion as Motion } from "framer-motion";
+import { useMemo, useState, lazy, Suspense } from "react";
+import { createPortal } from "react-dom";
+import { X } from "lucide-react";
+
+const DriftWall = lazy(() => import("./react-bits/DriftWall"));
+
+const GALLERY_IMAGES = [
+  "/projetos/a2cine/1.gif",
+  "/projetos/hubmachines/1.jpg",
+  "/projetos/hubmachines/2.jpg",
+  "/projetos/hubmachines/3.jpg",
+  "/projetos/workchat/2.jpg",
+  "/projetos/workchat/3.jpg",
+  "/projetos/workchat/4.jpg",
+  "/projetos/sitebelluno/1.jpg",
+  "/projetos/mercadao/1.jpg",
+  "/projetos/mercadao/2.jpg",
+  "/projetos/mercadao/3.jpg",
+  "/projetos/mercadao/4.jpg",
+  "/projetos/sitebelluno/2.jpg",
+  "/projetos/extensao-whats/1.jpg",
+  "/projetos/worktower/1.jpg",
+];
 
 const PhotoGallery = () => {
-  const imagesRow1 = [
-    "/projetos/a2cine/1.gif",
-    "/projetos/hubmachines/1.jpg",
-    "/projetos/hubmachines/2.jpg",
-    "/projetos/hubmachines/3.jpg",
-    "/projetos/workchat/2.jpg",
-    "/projetos/workchat/3.jpg",
-    "/projetos/workchat/4.jpg",
-    "/projetos/sitebelluno/1.jpg",
-    "/projetos/mercadao/1.jpg",
-    "/projetos/mercadao/2.jpg",
-    "/projetos/mercadao/3.jpg",
-    "/projetos/mercadao/4.jpg",
-    "/projetos/hubmachines/2.jpg",
-  ];
+  const [preview, setPreview] = useState(null);
 
-  const imagesRow2 = [
-    "/projetos/mercadao/1.jpg",
-    "/projetos/mercadao/2.jpg",
-    "/projetos/mercadao/3.jpg",
-    "/projetos/mercadao/4.jpg",
-    "/projetos/hubmachines/2.jpg",
-    "/projetos/sitebelluno/1.jpg",
-    "/projetos/sitebelluno/2.jpg",
-    "/projetos/sitebelluno/3.jpg",
-    "/projetos/extensao-whats/1.jpg",
-    "/projetos/a2cine/1.gif",
-    "/projetos/workchat/2.jpg",
-    "/projetos/workchat/3.jpg",
-    "/projetos/workchat/4.jpg",
-  ];
+  const items = useMemo(
+    () =>
+      GALLERY_IMAGES.map((image, i) => ({
+        image,
+        title: `Preview ${i + 1}`,
+      })),
+    [],
+  );
+
+  const isMobile =
+    typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
 
   return (
-    <div
-      className="relative w-full overflow-hidden py-16 md:py-24 flex flex-col items-center justify-center min-h-[50vh] md:min-h-[70vh] mt-0 bg-transparent"
-      style={{
-        maskImage:
-          "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-        WebkitMaskImage:
-          "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)",
-      }}
-    >
-      {/* Diagonal Infinite Scroll Photo Gallery */}
-      <div
-        className="absolute inset-0 z-0 flex flex-col justify-center items-center gap-6 md:gap-8"
-        style={{ transform: "rotate(-5deg) scale(1.2)" }}
-      >
-        <Motion.div
-          className="flex gap-6 md:gap-8 whitespace-nowrap min-w-max"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ ease: "linear", duration: 120, repeat: Infinity }}
+    <div className="relative w-full min-h-[64vh] md:min-h-[78vh] overflow-hidden py-12 md:py-20">
+      <div className="absolute inset-0 z-0">
+        <Suspense
+          fallback={
+            <div className="h-full w-full bg-slate-950/40" aria-hidden="true" />
+          }
         >
-          {[...imagesRow1, ...imagesRow1].map((src, idx) => (
-            <Motion.div
-              key={`r1-${idx}`}
-              className="w-[320px] h-[200px] md:w-[500px] md:h-[300px] lg:w-[600px] lg:h-[360px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 shrink-0 bg-slate-900 group cursor-pointer relative"
-              whileHover={{ scale: 1.05, zIndex: 10 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <img
-                src={src}
-                alt="Projeto"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </Motion.div>
-          ))}
-        </Motion.div>
-
-        <Motion.div
-          className="flex gap-6 md:gap-8 whitespace-nowrap min-w-max"
-          animate={{ x: ["-50%", "0%"] }}
-          transition={{ ease: "linear", duration: 150, repeat: Infinity }}
-        >
-          {[...imagesRow2, ...imagesRow2].map((src, idx) => (
-            <Motion.div
-              key={`r2-${idx}`}
-              className="w-[320px] h-[200px] md:w-[500px] md:h-[300px] lg:w-[600px] lg:h-[360px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 shrink-0 bg-slate-900 group cursor-pointer relative"
-              whileHover={{ scale: 1.05, zIndex: 10 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <img
-                src={src}
-                alt="Projeto"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-violet-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </Motion.div>
-          ))}
-        </Motion.div>
+          <div
+            className="h-full w-full"
+            onClick={(e) => {
+              const tile = e.target.closest?.("[data-tile-id]");
+              if (!tile) return;
+              const img = tile.querySelector("img");
+              if (img?.src) setPreview(img.getAttribute("src") || img.src);
+            }}
+          >
+            <DriftWall
+              items={items}
+              columns={isMobile ? 3 : 5}
+              tileWidth={isMobile ? 140 : 200}
+              tileHeight={isMobile ? 92 : 132}
+              gap={isMobile ? 12 : 18}
+              tilt={isMobile ? 10 : 16}
+              turn={isMobile ? -8 : -14}
+              depth={isMobile ? 80 : 120}
+              speed={isMobile ? 28 : 42}
+              parallax={isMobile ? 0.25 : 0.55}
+              fade={0.55}
+              dim={0.5}
+              overlayColor="#020617"
+            />
+          </div>
+        </Suspense>
       </div>
+
+      <div className="pointer-events-none relative z-10 flex h-full min-h-[64vh] md:min-h-[78vh] items-center justify-center px-4">
+        <div className="max-w-4xl text-center rounded-2xl border border-white/10 bg-slate-950/60 px-5 py-7 md:px-10 md:py-9 backdrop-blur-md shadow-[0_0_40px_rgba(8,145,178,0.18)]">
+          <p className="mb-3 text-xs md:text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300/90">
+            App Evolua Software
+          </p>
+          <h2 className="cursor-target text-3xl md:text-5xl font-extrabold text-white leading-tight tracking-tight">
+            Software que acompanha a evolução do seu negócio
+          </h2>
+          <p className="mt-3 text-base md:text-xl font-medium text-transparent bg-clip-text bg-linear-to-r from-cyan-300 to-violet-300">
+            Do diagnóstico à operação em produção
+          </p>
+          <p className="mt-5 mx-auto max-w-2xl text-sm md:text-lg text-slate-300 leading-relaxed">
+            Produtos digitais, SaaS e automações com foco em segurança,
+            performance e o que realmente aparece no dia a dia da sua empresa.
+          </p>
+        </div>
+      </div>
+
+      {preview &&
+        typeof document !== "undefined" &&
+        createPortal(
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-slate-950/85 p-4 backdrop-blur-md"
+            style={{ zIndex: 300 }}
+            onClick={() => setPreview(null)}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div
+              className="relative max-h-[90vh] max-w-5xl w-full overflow-hidden rounded-2xl border border-white/15 bg-slate-900 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                onClick={() => setPreview(null)}
+                className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-red-600 text-white shadow-lg transition hover:bg-red-500"
+                aria-label="Fechar preview"
+              >
+                <X size={20} />
+              </button>
+              <img
+                src={preview}
+                alt="Preview do projeto"
+                className="max-h-[90vh] w-full object-contain bg-black"
+              />
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 };

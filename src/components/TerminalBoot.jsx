@@ -1,45 +1,52 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion as Motion } from "framer-motion";
+import DecryptedText from "./react-bits/DecryptedText";
 
-const BOOT_TEXT =
-  "[SISTEMA]: Inicializando ecossistema de inovação App Evolua Software...";
+const BOOT_TEXT = "Portfólio Evolua Software";
 
 const TerminalBoot = ({ onComplete }) => {
-  const [displayed, setDisplayed] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
+  const doneRef = useRef(false);
 
   useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i <= BOOT_TEXT.length) {
-        setDisplayed(BOOT_TEXT.slice(0, i));
-        i++;
-      } else {
-        clearInterval(interval);
-        setTimeout(() => onComplete(), 600);
+    // Fallback se a animação não disparar (mobile / reduced motion)
+    const fallback = setTimeout(() => {
+      if (!doneRef.current) {
+        doneRef.current = true;
+        onComplete?.();
       }
-    }, 28);
-    return () => clearInterval(interval);
+    }, 4200);
+    return () => clearTimeout(fallback);
   }, [onComplete]);
 
   useEffect(() => {
-    const t = setInterval(() => setShowCursor((c) => !c), 480);
-    return () => clearInterval(t);
-  }, []);
+    const approxMs = BOOT_TEXT.length * 45 + 900;
+    const t = setTimeout(() => {
+      if (!doneRef.current) {
+        doneRef.current = true;
+        onComplete?.();
+      }
+    }, approxMs);
+    return () => clearTimeout(t);
+  }, [onComplete]);
 
   return (
     <Motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.7 }}
-      className="fixed inset-0 z-60 flex items-center justify-center bg-black font-mono text-green-400 text-base sm:text-lg md:text-xl px-6"
+      className="fixed inset-0 z-60 flex items-center justify-center bg-black px-6 font-mono text-green-400"
     >
-      <div className="max-w-4xl w-full text-left leading-relaxed">
-        <span className="text-green-500/90">{"> "}</span>
-        <span>{displayed}</span>
-        {showCursor && (
-          <span className="inline-block w-2 h-5 ml-0.5 align-middle bg-green-400" />
-        )}
+      <div className="w-full max-w-4xl text-center text-xl sm:text-2xl md:text-4xl font-semibold tracking-wide">
+        <DecryptedText
+          text={BOOT_TEXT}
+          animateOn="view"
+          sequential
+          speed={40}
+          revealDirection="start"
+          className="text-green-400"
+          encryptedClassName="text-green-700/80"
+          parentClassName="inline-block"
+        />
       </div>
     </Motion.div>
   );

@@ -1,18 +1,52 @@
 import { motion as Motion } from "framer-motion";
 import { Tilt } from "react-tilt";
 import { BookOpen, Briefcase, Cpu, Target } from "lucide-react";
+import BorderGlow from "./react-bits/BorderGlow";
+import SpecularButton from "./react-bits/SpecularButton";
 
 const defaultTilt = {
   reverse: false,
-  max: 35,
+  max: 18,
   perspective: 1000,
-  scale: 1.05,
+  scale: 1.02,
   speed: 1000,
   transition: true,
   axis: null,
   reset: true,
   easing: "cubic-bezier(.03,.98,.52,.99)",
 };
+
+const GLOW = {
+  backgroundColor: "#0f172a",
+  borderRadius: 14,
+  glowRadius: 26,
+  glowIntensity: 1.15,
+  fillOpacity: 0.32,
+  coneSpread: 28,
+  edgeSensitivity: 18,
+  glowColor: "186 85 60",
+  colors: ["#38bdf8", "#22d3ee", "#67e8f9"],
+};
+
+const TitleSpecular = ({ children }) => (
+  <SpecularButton
+    size="sm"
+    radius={10}
+    tint="#22d3ee"
+    tintOpacity={0.22}
+    textColor="#f8fafc"
+    lineColor="#67e8f9"
+    baseColor="#164e63"
+    intensity={1.25}
+    thickness={1.35}
+    autoAnimate
+    followMouse={false}
+    className="pointer-events-none! cursor-default! min-h-8! px-3! py-1.5! text-sm! font-bold! shadow-none! overflow-visible!"
+    onClick={(e) => e.preventDefault()}
+  >
+    {children}
+  </SpecularButton>
+);
 
 const Card = ({ title, icon, children, delay, x, y }) => {
   return (
@@ -23,33 +57,37 @@ const Card = ({ title, icon, children, delay, x, y }) => {
       transition={{ duration: 1, delay: delay, type: "spring" }}
       className="absolute md:w-64 w-full"
     >
-      <Tilt options={defaultTilt} className="h-full">
-        <div className="h-full p-4 md:p-5 rounded-xl bg-slate-900/80 backdrop-blur-md border border-cyan-500/20 hover:border-cyan-400/50 transition-colors shadow-lg group">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="p-1.5 rounded-lg bg-slate-800 text-cyan-400 group-hover:text-cyan-300 group-hover:scale-110 transition-all">
-              {icon}
+      <Tilt options={defaultTilt} className="h-full overflow-visible">
+        <BorderGlow className="h-full overflow-visible" {...GLOW}>
+          <div className="h-full overflow-visible rounded-[14px] bg-transparent p-4 group md:p-5">
+            <div className="mb-3 flex items-center gap-2 overflow-visible">
+              <div className="shrink-0 rounded-lg bg-slate-800 p-1.5 text-cyan-400 transition-all group-hover:scale-110 group-hover:text-cyan-300">
+                {icon}
+              </div>
+              <div className="min-w-0 overflow-visible">
+                <TitleSpecular>{title}</TitleSpecular>
+              </div>
             </div>
-            <h3 className="text-base md:text-lg font-bold text-slate-100">
-              {title}
-            </h3>
+            <div className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">
+              {children}
+            </div>
           </div>
-          <div className="text-xs md:text-sm text-slate-400 leading-relaxed font-light">
-            {children}
-          </div>
-        </div>
+        </BorderGlow>
       </Tilt>
     </Motion.div>
   );
 };
 
 const stackCard = (title, icon, children) => (
-  <div className="bg-slate-900/80 p-4 rounded-xl border border-white/10 shadow-sm">
-    <div className="flex items-center gap-2 mb-1.5 text-cyan-400">
-      {icon}
-      <h3 className="font-bold text-white text-sm">{title}</h3>
+  <BorderGlow className="w-full overflow-visible" {...GLOW} borderRadius={12} glowRadius={18}>
+    <div className="overflow-visible rounded-xl bg-transparent p-4 shadow-sm">
+      <div className="mb-2 flex items-center gap-2 overflow-visible text-cyan-400">
+        {icon}
+        <TitleSpecular>{title}</TitleSpecular>
+      </div>
+      <div className="text-slate-400 text-xs leading-relaxed">{children}</div>
     </div>
-    <div className="text-slate-400 text-xs leading-relaxed">{children}</div>
-  </div>
+  </BorderGlow>
 );
 
 const OrbitingCards = ({
@@ -61,10 +99,10 @@ const OrbitingCards = ({
 
   return (
     <div
-      className={`relative w-full max-w-7xl mx-auto flex items-center justify-center ${
+      className={`relative w-full max-w-7xl mx-auto flex items-center justify-center overflow-hidden overscroll-contain ${
         isProfile
-          ? "min-h-[520px] md:min-h-[480px] mt-6 md:mt-2"
-          : "h-[800px] md:h-[600px] mt-20 md:mt-0"
+          ? "min-h-130 md:min-h-120 mt-6 md:mt-2"
+          : "h-200 md:h-150 mt-20 md:mt-0"
       } ${className}`}
     >
       {centerLabel && (
@@ -75,7 +113,7 @@ const OrbitingCards = ({
         </div>
       )}
 
-      <div className="hidden md:block w-full h-full relative min-h-[460px]">
+      <div className="relative hidden h-full min-h-115 w-full overflow-hidden md:block">
         {!isProfile ? (
           <>
             <Card

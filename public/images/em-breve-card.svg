@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1200" viewBox="0 0 800 1200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#083344"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1200" fill="url(#bg)"/>
+  <rect x="48" y="48" width="704" height="1104" rx="36" fill="none" stroke="#22d3ee" stroke-opacity="0.45" stroke-width="4"/>
+  <text x="400" y="560" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="700" fill="#e2e8f0">Em Breve</text>
+  <text x="400" y="640" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" fill="#67e8f9" opacity="0.85">Projeto Confidencial</text>
+</svg>

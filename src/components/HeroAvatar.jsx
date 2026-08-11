@@ -77,7 +77,7 @@ const HeroAvatar = () => {
                           className="hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white"
                         />
                         <SocialLink 
-                          href="https://www.instagram.com/appevoluasoftware/?hl=pt-br" 
+                          href="https://www.instagram.com/appevoluasoftware/" 
                           icon={<Instagram size={28} />} 
                           label="Instagram"
                           className="hover:bg-linear-to-tr hover:from-purple-600 hover:via-pink-600 hover:to-orange-500 hover:border-pink-500 hover:text-white"
