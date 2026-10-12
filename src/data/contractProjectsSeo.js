@@ -12,6 +12,24 @@ export const ORGANIZATION_ID = `${SITE_ORIGIN}/#organization`;
  */
 export const CONTRACT_PROJECTS_SEO = [
   {
+    id: "workdraw",
+    name: "WorkDraw",
+    description:
+    "Plataforma de planejamento visual, documentos colaborativos, Kanban, gestão de projetos com GitHub com Inteligência Artificial: do rascunho à aprovação, com fluxogramas, diagramas, mapas mentais, quadro de demandas e relatórios de evolução do código. Ideal para equipes que querem unir planejamento e desenvolvimento em um só lugar.",
+    keywords: [
+      "TypeScript",
+      "Next.js",
+      "React",
+      "XYFlow",
+      "Yjs",
+      "Socket.io",
+      "WebSockets",
+      "NestJS",
+    ],
+    imagePath: "/projetos/workdraw/7.jpeg",
+    offerUrl: "https://workdraw.appevolua.com.br/",
+  },
+  {
     id: "hub-machines",
     name: "Hub Machines",
     description:
@@ -63,7 +81,7 @@ export const CONTRACT_PROJECTS_SEO = [
     ],
     imagePath: "/projetos/worktower/1.jpg",
     offerUrl: "https://workcontroltower.appevolua.com.br/",
-  },
+  }
 ];
 
 export function buildContractProductsJsonLd() {

@@ -15,6 +15,7 @@ import {
   Film,
   LayoutDashboard,
   Glasses,
+  PenTool,
 } from "lucide-react";
 import { createPortal } from "react-dom";
 import BorderGlow from "./react-bits/BorderGlow";
@@ -467,6 +468,70 @@ const ProjectGrid = () => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   const projetosProprios = [
+    {
+      title: "WorkDraw",
+      shortDescription:
+        "Planejamento visual, documentos, Kanban e engenharia com GitHub e IA — do rascunho à aprovação, em um só lugar.",
+      descriptionIntro:
+        "TypeScript | Next.js (React) | XYFlow | Yjs + Socket.io | NestJS",
+      fullDescription: (
+        <>
+          <p className="mb-4">
+            O <strong className="text-white">WorkDraw</strong> transforma ideias
+            em projetos: Crie documentos colaborativos em tempo real com outros usuários, fluxo de solicitar avaliações de documentos e aprovações de projetos, organize o planejamento, distribua tarefas e acompanhe
+            o que está sendo desenvolvido, automatize o envio de relatórios de evolução do código com apoio da IA — tudo em um só
+            lugar.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            1 · Planeje visualmente
+          </h4>
+          <p>
+            Crie fluxogramas, diagramas, mapas mentais e protótipos de alta
+            fidelidade colaborativos em tempo real para estruturar ideias em
+            projetos claros.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            2 · Organize demandas em um quadro dedicado
+          </h4>
+          <p>
+            Monte colunas, priorize tarefas e acompanhe o andamento da equipe —
+            no projeto de engenharia ou em um espaço independente só para
+            demandas.
+          </p>
+          <h4 className="text-white font-bold mt-4 mb-2">
+            3 · Acompanhe o desenvolvimento com IA
+          </h4>
+          <p>
+            Conecte repositórios GitHub, consulte o histórico de alterações e
+            transforme a evolução do código em relatórios compreensíveis e
+            automatizados — mais do que commits: o que realmente evoluiu no
+            projeto.
+          </p>
+        </>
+      ),
+      tags: [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "XYFlow",
+        "Yjs",
+        "Socket.io",
+        "NestJS",
+      ],
+      status: "Disponível para uso gratuito",
+      icon: <PenTool size={28} />,
+      image: "/projetos/workdraw/7.jpeg",
+      gallery: [
+        "/projetos/workdraw/1.jpg",
+        "/projetos/workdraw/2.jpg",
+        "/projetos/workdraw/3.jpg",
+        "/projetos/workdraw/4.jpg",
+        "/projetos/workdraw/5.jpg",
+        "/projetos/workdraw/6.jpg",
+        "/projetos/workdraw/7.jpeg",
+      ],
+      link: "https://workdraw.appevolua.com.br/",
+    },
     {
       title: "WorkChat",
       shortDescription:
